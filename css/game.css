@@ -4,9 +4,11 @@
 	display: table-cell;
 	padding: 15px;
 	font-size: 72px;
+	cursor: pointer;
 }
 .cell:hover, .glyphicon-question-sign:hover {
 	color: blue;
+	cursor: pointer;
 }
 
 .glyphicon-question-sign {
@@ -18,5 +20,46 @@
 	color: red;
 }
 .flipped {
-	color: green;
+	/*color: green;*/
+	animation: flipping 1s 0s;
 }
+@keyframes flipping {
+	0% {
+			transform: scale(1,1);
+			opacity: 100;
+		}
+	100% {
+			transform: scale(0,1);
+			opacity: 0;
+		}
+}
+.hideMe {
+	opacity: 0;
+	transition: all 1s ease;
+}
+.showMe {
+	opacity: 100;
+	transition: all 1s ease;
+}
+
+.container {
+	padding: 5px;
+	border: solid thin blue;
+	display: table-cell;
+}
+
+/*
+cool pulsating effect
+@keyframes flipping {
+    0% {color:green}
+    50% {color:yellow}
+    100% {color:green}
+}
+*/
+/*
+ * #dd_main2 {
+  transition-property: top, left;
+  transition-duration: 1s, 1s;
+  transition-delay: 0s, 1s;
+}
+ */
