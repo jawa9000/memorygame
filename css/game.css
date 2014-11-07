@@ -1,0 +1,22 @@
+.table {display: table;}
+.row {display: table-row;}
+.cell {
+	display: table-cell;
+	padding: 15px;
+	font-size: 72px;
+}
+.cell:hover, .glyphicon-question-sign:hover {
+	color: blue;
+}
+
+.glyphicon-question-sign {
+	padding: 15px;
+	font-size: 72px;
+}
+
+.normal {
+	color: red;
+}
+.flipped {
+	color: green;
+}

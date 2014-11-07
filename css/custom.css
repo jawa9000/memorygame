@@ -1,0 +1,232 @@
+/* fixed navbar needs to have a body offset */
+body {
+	margin-top: 50px;
+	background: #eee;
+}
+
+.pad-top-10 {padding-top: 10px;}
+.pad-top-20 {padding-top: 20px;}
+.pad-top-30 {padding-top: 30px;}
+
+.media-body {
+	font-size: 120%;
+}
+
+/* overwrite bootstrap default colors for list items */
+footer {
+	text-align: center;
+	padding: 20px 0;
+	font-weight: bold;
+}
+
+/* logo */
+.logo {
+	width: 60px;
+	-ms-transform: translate(0px,-6px); /* IE 9 */
+	-webkit-transform: translate(0px,-6px); /* Chrome, Safari, Opera */
+	transform: translate(0px,-6px)
+}
+
+/* custom color scheme */
+/* navigation bar */
+.navbar-inverse {
+	background: #8abcf7;
+}
+.navbar-inverse .navbar-nav > li > a {
+	color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus, .dropdown-menu {
+	background: #d5e5f8;
+}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+	background: #8abcf7;
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
+	background: #d5e5f8;
+}
+.navbar-fixed-top {
+	border-width: 0 0 0px;
+}
+.navbar-nav>li>.dropdown-menu {
+	border-radius: 5px;
+}
+/* panels */
+.panel-default > .panel-heading {
+	background: #8ABCF7 !important;
+	color: #FFFFFF;
+}
+/* tweak for a gap between the height of the navbar and the ul link elements' bottom */
+.navbar-nav {margin: 0 0 -3px;}
+.panel-default>.panel-heading {
+	border-color: #8ABCF7;
+}
+/* glyphicon */
+.glyphicon {
+	color: #435b77;
+}
+/* links */
+a  {
+	color: #6e95c4;
+}
+a:hover, a:focus {
+	color: #435b77;
+}
+p.about a, #quote a {
+	color: #f79231;
+} 
+/* labels */
+.label-info {
+	background: #8ABCF7
+}
+.label {
+	color: #ffffff;
+}
+
+/* tutorial and fun pages */
+.anchorLink {
+	font-weight: bold;
+	text-align: center;
+}
+.tutorialNote, .webNote {
+	margin: 5px 0px 5px 0;
+	padding: 5px;
+	border-bottom: solid #435B77 2px;
+}
+.tutorialNote:last-child, .webNote:last-child {
+	border: none;
+}
+.tutorialNote h3, .webNote h3 {
+	margin: 5px 0 0 10px;
+}
+.tutorialNote p, .webNote p {
+	padding-left: 10px;
+}
+.tutorialNote .label.label-info, .webNote .label.label-info {
+	margin-left: 10px;
+}
+.row h2 a {
+	text-decoration: none;
+	color: black;
+}
+
+/* general bootstrap tweaks */
+.row {
+	padding-left: 5px;
+}
+h2 a[name] { /* Fix for position navbar obscuring anchors */
+	padding-top: 50px;
+	margin-top: -50px;
+	display: inline-block;
+}
+a.anchor {
+	display: block; 
+	position: relative; 
+	top: -50px; 
+	visibility: hidden;
+}
+@font-face {
+	font-family:"FontAwesome";
+	src: url("../fonts/fontawesome-webfont.ttf");
+}
+body {
+	font-family: FontAwesome;
+	font-size: 1.75em;
+}
+#copyright {
+	font-family: arial;
+	font-size: 0.75em;
+}
+
+/* carousel tweaks */
+div.carousel-inner div img {
+	margin: 10px auto 0;
+	width: 50%;
+}
+div.carousel-caption {
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6);
+	position: initial;
+}
+div.carousel-caption p {padding-bottom: 15px;}
+.carousel-caption-pushed { /* pushes the carousel-caption below the image */
+	margin-top: 10px;
+	position: static;
+}
+.carousel-indicators-pushed { /* pushes the carousel-indicators down a bit so they don't overlap the text of the caption */
+	margin-bottom: 0;
+}
+
+/* resume page */
+.resumeTitle {
+	margin-top: -5px;
+}
+.tab-pane .span8:first-child {
+	margin-top: 10px;
+}
+.lozenge {
+	padding: 5px;
+	border-bottom: solid #435B77 2px;
+    padding: 10px 0 0 10px;
+    margin: 0 0 16px -14px;
+}
+.lozenge:last-child {border: none;}
+
+/* portfolio-3d page fixes */
+.centered {text-align: center;}
+div.carousel-caption ul {
+	text-align: left;
+	padding-left: 60px;
+}
+div.carousel-caption p ul li {padding: 5px;}
+
+/* image resize tweaks */
+/* ** this may be too broad for every page ** */
+img {max-width: 100%;}
+
+/* tutorial pages */
+.imgThumbnail {
+	width: 100px;
+	padding: 5px;
+	margin: 5px;
+	cursor: pointer;
+	border-radius: 5px;
+	padding: 5px;
+	background: rgba(0,0,0,0.1);
+}
+.imgThumbnail:hover {
+	background: rgba(0,0,255,0.2);
+	cursor: pointer;
+}
+.imageModal div.modal-content {text-align: center;}
+.imageModal div.modal-content img {padding: 10px;}
+
+/* RSS feed tweaks */
+li.rss-item div div a img {
+	max-width: 90%;
+	width: 100%;
+}
+div[class^='rss-box-'] ul {
+	list-style-type: none;
+	margin-left: -35px;
+}
+li.rss-item {
+	padding: 5px;
+	background: none;
+	margin-bottom: 5px;
+	border-bottom: solid #435B77 2px;
+}
+li.rss-item:last-child {border: none;}
+li.rss-item a.rss-item {
+	font-size: 1.3em;
+	font-weight: bold;
+}
+li.rss-item a img {padding: 5px;}
+li.rss-item div a {color: #f79231;}
+
+/* mobile media tweaks */
+/* ** this may not be right ** */
+@media only screen and (max-device-width: 768px) {
+	li.rss-item div div a img {
+		max-width: 90%;
+		width: 100%;
+	}
+}
