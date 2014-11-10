@@ -59,3 +59,142 @@ $(document).ready(function() {
 		console.log(iconData);
 	});
 });
+
+// fields and ramdonly picked cell values
+
+var fields = ["2x2","3x3","4x4","5x5","6x6"];
+var fieldMessage = "<div class='table'><div class='row'>";
+for (var i = 0; i < fields.length; i++) {
+	fieldMessage += "<div class='button' id='field" + i + "'>" + fields[i] + "</div>";
+}
+fieldMessage += "</div></div>";
+$("#buttons").html(fieldMessage);
+
+$(".button").click(function() {
+	var buttonValue = $(this).attr("id");
+	var fieldSize = parseInt(buttonValue.slice(5,6)) + 2;
+	var randomTiles = [];
+	
+	buildArray(fieldSize,randomTiles);
+	console.log("randomTiles: " + randomTiles);
+	 
+	removeDups(fieldSize,randomTiles);
+	console.log("adjusted: " + randomTiles);
+	 
+	// for each row, randomly pick a values from randomTiles and display it
+	randomizeArray(fieldSize,randomTiles);
+	
+	// generate field based on button click
+	var tempCount = 0;
+	var field = "<div class='table'>";
+	for (var i = 0; i < fieldSize; i++) {
+	 	field += "<div class='row' id=fieldRow" + i + ">";
+	 	for (var j = 0; j < fieldSize; j++) {
+	 		field += "<div class='cell' id='fieldCell" + i + "-" + j + "'>" + randomTiles[tempCount] + "</div>";
+	 		tempCount++;
+	 	}
+	 	field += "</div>";
+	}
+	field += "</div>";
+	$("#field").html(field);	
+	// end field generation 
+});
+
+function buildArray(size,array) { // ** this needs to be a 2d array, not 1d **
+	for (var i = 0; i < size; i++) {
+		var ranNum = Math.floor(Math.random() * 20); // there are up to 6 different icons to choose from
+		array.push(ranNum);
+	}
+}
+function removeDups(size,array) { // ** this needs to be able to read a 2d array **
+ 	for (var i = 0; i < size; i++) {
+	 	var a = i;
+	 	var b = a + 1;
+	 	if (b > size - 1) {
+	 		b = b - size;
+	 	}
+	 	var c = b + 1;
+	 	if (c > size - 1) {
+	 		c = c - size;
+	 	}
+	 	var d = c + 1;
+	 	if (d > size - 1) {
+	 		d = d - size;
+	 	}
+	 	var e = d + 1;
+	 	if (e > size - 1) {
+	 		e = e - size;
+	 	}
+	 	var f = e + 1;
+	 	if (f > size - 1) {
+	 		f = f - size;
+	 	}
+	 	
+	 	//console.log("a:" + a + " b:" + b + " c:" + c + " d:" + d + " e:" + e);
+		switch (size) {
+		 	case 2:
+			 	if (array[a] == array[b]) {
+			 		while(array[a] == array[b]) {
+			 			if (array[a] + 1 < 20) {
+			 				array[a]++;
+			 			}
+			 		}
+			 	}
+		 		break;
+		 	case 3:
+			 	if (array[a] == array[b] || array[a] == array[c]) {
+			 		while(array[a] == array[b] || array[a] == array[c]) {
+			 			if (array[a] + 1 < 20) {
+			 				array[a]++;
+			 			}
+			 		}
+			 	}
+		 		break;
+		 	case 4:
+		 		if (array[a] == array[b] || array[a] == array[c] || array[a] == array[d]) {
+			 		while(array[a] == array[b] || array[a] == array[c] || array[a] == array[d]) {
+			 			if (array[a] + 1 < 20) {
+			 				array[a]++;
+			 			}
+			 		}
+			 	}
+		 		break;
+		 	case 5:
+		 		if (array[a] == array[b] || array[a] == array[c] || array[a] == array[d] || array[a] == array[e]) {
+			 		while(array[a] == array[b] || array[a] == array[c] || array[a] == array[d] || array[a] == array[e]) {
+			 			if (array[a] + 1 < 20) {
+			 				array[a]++;
+			 			}
+			 		}
+			 	}
+		 		break;
+		 	case 6:
+		 		if (array[a] == array[b] || array[a] == array[c] || array[a] == array[d] || array[a] == array[e] || array[a] == array[f]) {
+			 		while(array[a] == array[b] || array[a] == array[c] || array[a] == array[d] || array[a] == array[e] || array[a] == array[f]) {
+			 			if (array[a] + 1 < 20) {
+			 				array[a]++;
+			 			}
+			 		}
+			 	}
+		 		break;
+		 }
+ 	}
+}
+	 
+function randomizeArray(size,array) { // ** this nneds to handle a 2d array **
+	var tempArray = []; // array to hold a copy of randomTiles
+	var randomArray = []; // array to hold randomly ordered version of randomTiles
+	for (i in array) { // copy randomTiles to tempArray
+	 	tempArray.push(array[i]);
+	}
+	for (var i = 0; i < size; i++) {
+		if (tempArray.length > 0) {
+			var rnd = Math.floor(Math.random() * (tempArray.length - 1));
+			randomArray.push(tempArray[rnd]);
+			tempArray.splice(rnd, 1);
+	 	}
+	}
+	console.log("original order: " + array);
+	console.log("final order: " + randomArray);
+}
+

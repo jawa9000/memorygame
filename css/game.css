@@ -63,3 +63,36 @@ cool pulsating effect
   transition-delay: 0s, 1s;
 }
  */
+
+.button {
+	display: table-cell;
+	padding: 5px;
+	border-radius: 5px;
+	background: blue;
+	margin: 5px;
+	cursor: pointer;
+	color: white;
+	text-align: center;
+}
+.button:hover {
+	background: orange;
+	cursor: pointer;
+}
+/*
+.table {
+	display: table;
+	margin: 0 auto;
+}
+.row {display: row;}
+.cell {
+	display: table-cell;
+	padding: 0;
+	margin: 0;
+	width: 25px;
+	width: 25px;
+	border: solid thin blue;
+	cursor: pointer;
+	background: #0033CC;
+}
+.cell:hover {background: #006600;}
+*/
