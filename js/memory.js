@@ -100,13 +100,15 @@ $(".button").click(function() {
 	// end field generation 
 });
 
-function buildArray(size,array) { // ** this needs to be a 2d array, not 1d **
-	for (var i = 0; i < size; i++) {
+function buildArray(size,array) {
+	console.log("buildArray function: size: " + size);
+	console.log("buildArray function: array: " + array);
+	for (var i = 0; i < size * size; i++) {
 		var ranNum = Math.floor(Math.random() * 20); // there are up to 6 different icons to choose from
 		array.push(ranNum);
 	}
 }
-function removeDups(size,array) { // ** this needs to be able to read a 2d array **
+function removeDups(size,array) {
  	for (var i = 0; i < size; i++) {
 	 	var a = i;
 	 	var b = a + 1;
@@ -179,9 +181,28 @@ function removeDups(size,array) { // ** this needs to be able to read a 2d array
 		 		break;
 		 }
  	}
+ 	
+ 	// ** needs a step to take the first half of the array, and duplicate it so the field can have matching items **
+ 	console.log("array before the cut: " + array);
+ 	var tempArray = [];
+ 	for (var i = 0; i < (array.length / 2); i++) {
+		tempArray.push(array[i]);
+		tempArray.push(array[i]);
+ 	}
+ 	tempArray.pop();
+ 	console.log("array with single dups: " + tempArray);
+ 	console.log("array length: " + tempArray.length);
+ 	
+ 	array = [];
+ 	for (i in tempArray) {
+ 		array.push(tempArray[i]);
+ 	}
+ 	
+ 	// ** this works for going through the array and making a set of matching items. However, the rest of this function prohibits duplicates from happening.
+ 	// ** adjust this script
 }
 	 
-function randomizeArray(size,array) { // ** this nneds to handle a 2d array **
+function randomizeArray(size,array) {
 	var tempArray = []; // array to hold a copy of randomTiles
 	var randomArray = []; // array to hold randomly ordered version of randomTiles
 	for (i in array) { // copy randomTiles to tempArray
