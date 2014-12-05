@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link href="css/custom.css" rel="stylesheet">
+	<link href="css/memory.css" rel="stylesheet">
+    <script src="js/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript">
+$(document).ready(function() {
+var idArray = [];
+var dataArray = [];
+var classArray = [];
+var icons = ["asterisk","cloud","music","heart","star","user","home","file","lock","headphones","volume-up","book","camera","picture","tint","play","arrow-right","fire","eye-open","thumbs-up","globe","phone","floppy-disk","tower","tree-deciduous"]; // all possible icons
+var defaultIcon = "question-sign";
+var fieldSize = 0;
+var score = 0;
+var goalArray = [4, 8, 16, 24, 36];
+var goal = 0;
+var randomTiles = []; // array to hold a list of icons to be display on the game field
+var randomTiles2D = []; // convert randomTiles to 2d array
+
+function buildField() {		
+	// pick random icons and store them in an array
+	var fieldSize = 3; // ** temp variable
+	var iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
+	
+	if (iconNum % 2) { // if iconNum is odd, subject one and push the 'empty tile' icon into the array
+		iconNum--;
+		randomTiles.push("star-empty"); // this tile doesn't have a match
+	}
+	for (var i = 0; i < iconNum; i++) { // pick a pair of icons and push into array
+		var rndIcon = Math.floor(Math.random() * icons.length);
+		randomTiles.push(icons[rndIcon]);
+		randomTiles.push(icons[rndIcon]);
+	}
+	// randomize order of randomTiles
+	var tempArray = []; // array to hold a copy of randomTiles
+	var randomArray = []; // array to hold randomly ordered version of randomTiles
+	for (i in randomTiles) { // copy randomTiles to tempArray
+	 	tempArray.push(randomTiles[i]);
+	}
+	for (var i = 0; i < randomTiles.length; i++) {
+		if (tempArray.length > 0) {
+			var rnd = Math.floor(Math.random() * (tempArray.length - 1));
+			randomArray.push(tempArray[rnd]);
+			tempArray.splice(rnd, 1);
+	 	}
+	}
+	console.log(randomTiles);
+	//randomTiles2D = [];
+	//while(randomTiles.length) {
+	//	randomTiles2D.push(randomTiles.splice(0,fieldSize));
+	//}
+	//console.log(randomTiles2D);
+	
+	for (var i = 0; i < 6; i++) {
+		var tempIdArray = [];
+		var tempDataArray = [];
+		var tempClassArray = [];
+		for (var j = 0; j < 6; j++) {
+			tempIdArray.push("icon" + i + "-" + j);
+			tempDataArray.push(i + "-" + j);
+			tempClassArray.push("cell");
+		}
+	idArray.push(tempIdArray);
+	dataArray.push(tempDataArray);
+	classArray.push(tempClassArray);
+}
+
+var count = 0;
+var field = "<div class='table'>";
+for (var i = 0; i < 6; i++) {
+	field += "<div class='row'>";
+	for (var j = 0; j < 6; j++) {
+		field += "<div id='" + idArray[i][j] + "' data='" + randomTiles[count] + "' class='" + classArray[i][j] + "'>000</div>";
+		console.log(randomTiles[count]);
+		count++;
+	}
+	field += "</div>";
+}
+field += "</div>";
+//$("#output").html(field);
+
+//replace data property with randomTiles values
+for (var i = 0; i < count; i++) {
+	//get id
+	// get data
+	// replace data
+}
+
+
+$("#message").html(field); // output field
+}
+buildField();
+
+
+});
+
+    </script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="message"></div>
+</body>
+</html>
