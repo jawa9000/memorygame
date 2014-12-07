@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<!-- Bootstrap core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		
+		<!-- Custom styles for this template -->
+		<link href="css/custom.css" rel="stylesheet">
+		<link href="css/memory.css" rel="stylesheet">
+		
+		<!-- jQuery -->
+		<script src="js/jquery-2.1.0.min.js"></script>
+		
+		<!-- Bootstrap main javascript -->
+		<script src="js/bootstrap.js"></script>
+	</head>
+	<body>
+		<div id="output"></div>
+	</body>
+	<script>
+		// build 2d three arrays
+			// id
+			// classes
+			// data
+		// set up all arrays that if the number of members is odd, handle it consistantly across all arrays
+		var idArray = [];
+		var dataArray = [];
+		var classArray = [];
+		var iconTiles = []; // array to hold a list of icons to be display on the game field
+		var icons = ["asterisk","cloud","music","heart","star","user","home","file","lock","headphones","volume-up","book","camera","picture","tint","play","arrow-right","fire","eye-open","thumbs-up","globe","phone","floppy-disk","tower","tree-deciduous"]; // all possible icons
+		var fieldSize = 3; // this can change between 2-6
+		console.log(fieldSize);
+		
+		var iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
+		
+		if (iconNum % 2) { // if iconNum is odd, subject one and push the 'empty tile' icon into the array
+			iconNum--;
+			iconTiles.push("star-empty"); // this tile doesn't have a match
+		}
+		for (var i = 0; i < iconNum; i++) { // pick a pair of icons and push into array
+			var rndIcon = Math.floor(Math.random() * icons.length);
+			iconTiles.push(icons[rndIcon]);
+			iconTiles.push(icons[rndIcon]);
+		}
+		console.log("iconTiles array: " + iconTiles);
+		// insert randomizer here
+		
+		// create id array
+		for (var i = 0; i < fieldSize; i++) {
+			for (var j = 0; j < fieldSize; j++) {
+				idArray.push(i + "-" + j);
+			}
+		}
+		console.log("idArray: " + idArray);
+		
+		// create data array
+		for (i in iconTiles) {
+			dataArray.push(iconTiles[i]);
+		}
+		console.log("dataArray: " + dataArray);
+		
+		// create class array
+		for (var i = 0; i < fieldSize; i++) {
+			for (var j = 0; j < fieldSize; j++) {
+				classArray.push("cell");
+			}
+		}
+		console.log("classArray: " + classArray);
+		
+		// what if all arrays start out as a 1d array and push their data into a second 2d array???
+		var data2DArray = [];
+		var count = 0;
+		
+		function convertArray(array1d,array2d) {
+			var count = 0;
+			for (var i = 0; i < fieldSize; i++) {
+				var tempArray = [];
+				for (var j = 0; j < fieldSize; j++) {
+					tempArray.push(array1d[count]);
+					count++;
+				}
+				array2d.push(tempArray);
+			}
+			console.log(array2d);
+		}
+		var id2DArray = [];
+		var class2DArray = [];
+		convertArray(idArray,id2DArray);
+		convertArray(dataArray,data2DArray);
+		convertArray(classArray,class2DArray);
+		
+		// generate game field and display it
+		var message = "<div class='table'>";
+		for (var i = 0; i < fieldSize; i++) {
+			message += "<div class='row'>";
+			for (var j = 0; j < fieldSize; j++) {
+				message += "<div id='" + id2DArray[i][j] + "' class='" + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'>Temp</div>";
+			}
+			message += "</div>";
+		}
+		message += "</div>";
+		message += "<div>THIS WORKS! JUST ADD THE RANDOMIZER TO THE DATA ARRAY!!!!</DIV>";
+		$("#output").html(message);
+	</script>
+</html>
