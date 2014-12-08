@@ -15,6 +15,73 @@
 	</head>
 	<body>
 		<div id="output"></div>
+		<div id="bootstrap"></div>
+		<div id="field">game field goes here. fieldSize = 5 is tricky. See below</div>
+		<h1>2x2</h1>
+		<div class="row">
+			<div class="col-md-2 border">left 2</div>
+			<div class="col-md-8 border">
+				<div class="row">
+					<div  class="col-md-6 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-6 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+				</div>
+			</div>
+			<div class="col-md-2 border">right 2</div>
+		</div>
+		<h1>3x3</h1>
+		<div class="row">
+			<div class="col-md-2 border">left 2</div>
+			<div class="col-md-8 border">
+				<div class="row">
+					<div  class="col-md-4 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-4 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-4 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+				</div>
+			</div>
+			<div class="col-md-2 border">right 2</div>
+		</div>
+		<h1>4x4</h1>
+		<div class="row">
+			<div class="col-md-2 border">left 2</div>
+			<div class="col-md-8 border">
+				<div class="row">
+					<div  class="col-md-3 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-3 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-3 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-3 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+				</div>
+			</div>
+			<div class="col-md-2 border">right 2</div>
+		</div>
+		<h1>5x5</h1>
+		<div class="row">
+			<div class="col-md-2 border">left 2</div>
+			<div class="col-md-8 border">
+					<div class="col-md-1"></div>
+			      	<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
+			      	<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
+			      	<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
+			      	<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
+			      	<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
+			      	<div class="col-md-1"></div>
+			</div>
+			<div class="col-md-2 border">left 2</div>
+		</div>
+		<h1>6x6</h1>
+		<div class="row">
+			<div class="col-md-2 border">left 2</div>
+			<div class="col-md-8 border">
+				<div class="row">
+					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+				</div>
+			</div>
+			<div class="col-md-2 border">right 2</div>
+		</div>
 	</body>
 	<script>
 		// build 2d three arrays
@@ -30,7 +97,7 @@
 		var data2DArray = []; // 2d array converted from 1d array of data
 		var iconTiles = []; // array to hold a list of icons to be display on the game field
 		var icons = ["asterisk","cloud","music","heart","star","user","home","file","lock","headphones","volume-up","book","camera","picture","tint","play","arrow-right","fire","eye-open","thumbs-up","globe","phone","floppy-disk","tower","tree-deciduous"]; // all possible icons
-		var fieldSize = 3; // this can change between 2-6
+		var fieldSize = 4; // this can change between 2-6
 		
 		var iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
 		
@@ -78,7 +145,7 @@
 		// create class array
 		for (var i = 0; i < fieldSize; i++) {
 			for (var j = 0; j < fieldSize; j++) {
-				classArray.push("cell");
+				classArray.push("cell center-block glyphicon");
 			}
 		}
 		
@@ -99,24 +166,58 @@
 		convertArray(dataArray,data2DArray);
 		convertArray(classArray,class2DArray);
 		
+		// update class2DArray??
+		for (var i = 0; i < fieldSize; i++) {
+			for (var j = 0; j < fieldSize; j++) {
+				if (fieldSize == 2) { // col-md-6
+					class2DArray[i][j] += " col-md-6 ";
+				} else if (fieldSize == 3) { //col-md-4
+					class2DArray[i][j] += " col-md-4 ";
+				} else if (fieldSize == 4) { //col-md-3
+					class2DArray[i][j] += " col-md-3 ";
+				} else if (fieldSize == 5 || fieldSize == 6) { //col-md-2
+					class2DArray[i][j] += " col-md-2 ";
+				}
+				if (data2DArray[i][j] == "star-empty") {
+					class2DArray[i][j] += " glyphicon-star-empty ";
+				} else {
+					class2DArray[i][j] += " glyphicon-question-sign ";
+				}
+			}
+		}
+		
 		// generate game field and display it
 		var message = "<div class='table'>";
 		for (var i = 0; i < fieldSize; i++) {
 			message += "<div class='row'>";
-			for (var j = 0; j < fieldSize; j++) {
-				// if data == empty star, display that instead of question mark
-				// else question mark
-				if (data2DArray[i][j] == "star-empty") {
-					message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-star-empty " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
-				} else {
-					message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-question-sign " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
+				if (fieldSize == 5) {
+					message += "<div class='col-md-1'></div>";
 				}
+			for (var j = 0; j < fieldSize; j++) {
+				message += "<div id='" + id2DArray[i][j] + "' class='" + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";				
+			    //<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
+				
 				//message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-" + data2DArray[i][j] + " " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
+			}
+			if (fieldSize == 5) {
+				message += "<div class='col-md-1'></div>";
 			}
 			message += "</div>";
 		}
 		message += "</div>";
-		message += "<div>THIS WORKS! JUST ADD THE RANDOMIZER TO THE DATA ARRAY!!!!</DIV>";
+		message += "<div>THIS WORKS!</div>";
+		message += "<div>Try building a field with Bootstraps' system rather then the system I was using before</div>";
 		$("#output").html(message);
+		
+		message = "";
+		// based on Bootstrap's 12-grid, figure out how many columns to create based on the value of fieldSize
+		// class = .col-md-4
+		// so if fieldSize == 3, it should look something like this:
+		/*
+		 * <div class=".col-md-4"></div>
+		 * <div class=".col-md-4"></div>
+		 * <div class=".col-md-4"></div>
+		 */
+		$("#bootstrap").html(message);
 	</script>
 </html>
