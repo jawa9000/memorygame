@@ -14,50 +14,8 @@ $("#buttons").html(fieldMessage);
 // Display field based on button clicked
 $(".button").click(function() {
 	var buttonValue = $(this).attr("data");
-	/*
-	var fieldSize = buttonValue * buttonValue;
-	var iconSet;
-	switch(parseInt(buttonValue)) { // based on the value of buttonValue, create a number that will be used to pair icons
-		case 2:
-			iconSet = 2; //2
-			break;
-		case 3:
-			iconSet = Math.floor(Math.random() * 2) + 3; //3-4 icon sets
-			break;
-		case 4:
-			iconSet = Math.floor(Math.random() * 5) + 4; //4-8 icon sets
-			break;
-		case 5:
-			iconSet = Math.floor(Math.random() * 8) + 5; // 5-12 icon sets
-			break;
-		case 6:
-			iconSet = Math.floor(Math.random() * 13) + 6; // 6-18 icons sets
-			break;
-	}
-	*/
-	// ** figure out what the difference is between buttonValue and iconSet
-	// ** generate a list of icons based on the value of iconSet
-	//console.log("iconSet: " + iconSet);
-	//console.log("fields: " + (buttonValue * buttonValue));
-	
-	
 	var randomTiles = [];
-	
-	/*
-	// what if i used a 2d array; the size of the 2d array would depend on buttonValue
-	var finalArray = [];
-	
-	for (var i = 0; i < buttonValue; i++) {
-		var tempArray = [];
-		for (var j = 0; j < buttonValue; j++) {
-			var rndIcon = Math.floor(Math.random() * icons.length);
-			tempArray.push(icons[rndIcon]);
-		}
-		finalArray.push(tempArray);
-	}
-	console.log(finalArray);
-	*/
-	
+
 	// loop through buttonValue * buttonValue / 2
 	// randomly pick an icon
 	// push that random icon twice
@@ -68,25 +26,6 @@ $(".button").click(function() {
 		randomTiles.push(icons[rndIcon]);
 		randomTiles.push(icons[rndIcon]);
 	}
-	
-	
-	/*
-	// based on buttonValue, generate a list of icons
-	for (var i = 0; i < buttonValue; i++) {
-		var rndIcon = Math.floor(Math.random() * icons.length);
-		randomTiles.push(icons[rndIcon]);
-	}
-	*/
-	
-	/*
-	// multiple the size of the randomTiles array by itself to get the correct number of icons
-	var myLength = randomTiles.length;
-	myLength = myLength * myLength;
-	//console.log(myLength);
-	for (var i = 0; i < myLength - 1; i++) {
-		randomTiles.push(randomTiles[i]);
-	}
-	*/
 	console.log(randomTiles);
 	
 	// randomize order of randomTiles
@@ -123,27 +62,7 @@ $(".button").click(function() {
 });
 
 
-/*
- * $(".button").click(function() {
 
-	randomizeArray(iconSet,randomTiles);
-	
-	// generate field based on button click
-	var tempCount = 0;
-	var field = "<div class='table'>";
-	for (var i = 0; i < iconSet; i++) {
-	 	field += "<div class='row' id=fieldRow" + i + ">";
-	 	for (var j = 0; j < iconSet; j++) {
-	 		field += "<div class='cell' id='fieldCell" + i + "-" + j + "'>" + randomTiles[tempCount] + "</div>";
-	 		tempCount++;
-	 	}
-	 	field += "</div>";
-	}
-	field += "</div>";
-	$("#field").html(field);	
-	// end field generation 
-});
- */
 
 /*
 var count = 0; // generic number to iterate through icon array when drawing the board
