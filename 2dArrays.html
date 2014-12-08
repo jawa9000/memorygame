@@ -97,7 +97,7 @@
 		var data2DArray = []; // 2d array converted from 1d array of data
 		var iconTiles = []; // array to hold a list of icons to be display on the game field
 		var icons = ["asterisk","cloud","music","heart","star","user","home","file","lock","headphones","volume-up","book","camera","picture","tint","play","arrow-right","fire","eye-open","thumbs-up","globe","phone","floppy-disk","tower","tree-deciduous"]; // all possible icons
-		var fieldSize = 4; // this can change between 2-6
+		var fieldSize = 6; // this can change between 2-6
 		
 		var iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
 		
@@ -186,38 +186,33 @@
 			}
 		}
 		
-		// generate game field and display it
-		var message = "<div class='table'>";
-		for (var i = 0; i < fieldSize; i++) {
-			message += "<div class='row'>";
+		function generateField() { // generate game field and display it
+			//set up outer elements
+			var message = "<div class='row'>";
+			message += "<div class='col-md-2'></div>"; // left side
+			message += "<div class='col-md-8'>"; // start of center
+			for (var i = 0; i < fieldSize; i++) {
+				message += "<div class='row'>";
+					if (fieldSize == 5) {
+						message += "<div class='col-md-1'></div>";
+					}
+				for (var j = 0; j < fieldSize; j++) {
+					message += "<div id='" + id2DArray[i][j] + "' class='" + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";				
+				    //<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>				
+					//message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-" + data2DArray[i][j] + " " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
+				}
 				if (fieldSize == 5) {
 					message += "<div class='col-md-1'></div>";
 				}
-			for (var j = 0; j < fieldSize; j++) {
-				message += "<div id='" + id2DArray[i][j] + "' class='" + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";				
-			    //<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
-				
-				//message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-" + data2DArray[i][j] + " " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
-			}
-			if (fieldSize == 5) {
-				message += "<div class='col-md-1'></div>";
+				message += "</div>";
 			}
 			message += "</div>";
+			// finish up outer elements
+			message += "</div>"; // end of center
+			message += "<div class='col-md-2'></div></div>"; // right side and end of row
+			
+			$("#output").html(message);
 		}
-		message += "</div>";
-		message += "<div>THIS WORKS!</div>";
-		message += "<div>Try building a field with Bootstraps' system rather then the system I was using before</div>";
-		$("#output").html(message);
-		
-		message = "";
-		// based on Bootstrap's 12-grid, figure out how many columns to create based on the value of fieldSize
-		// class = .col-md-4
-		// so if fieldSize == 3, it should look something like this:
-		/*
-		 * <div class=".col-md-4"></div>
-		 * <div class=".col-md-4"></div>
-		 * <div class=".col-md-4"></div>
-		 */
-		$("#bootstrap").html(message);
+		generateField();
 	</script>
 </html>
