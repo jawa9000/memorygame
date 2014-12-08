@@ -22,13 +22,15 @@
 			// classes
 			// data
 		// set up all arrays that if the number of members is odd, handle it consistantly across all arrays
-		var idArray = [];
-		var dataArray = [];
-		var classArray = [];
+		var idArray = []; // 1d array of all ids on game field elements
+		var dataArray = []; // 1d array of all data values of game field elements
+		var classArray = []; // 1d array of all classes of game field elements
+		var id2DArray = []; // 2d array converted from 1d array of ids
+		var class2DArray = []; // 2d array converted from 1d array of class
+		var data2DArray = []; // 2d array converted from 1d array of data
 		var iconTiles = []; // array to hold a list of icons to be display on the game field
 		var icons = ["asterisk","cloud","music","heart","star","user","home","file","lock","headphones","volume-up","book","camera","picture","tint","play","arrow-right","fire","eye-open","thumbs-up","globe","phone","floppy-disk","tower","tree-deciduous"]; // all possible icons
 		var fieldSize = 3; // this can change between 2-6
-		console.log(fieldSize);
 		
 		var iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
 		
@@ -41,8 +43,23 @@
 			iconTiles.push(icons[rndIcon]);
 			iconTiles.push(icons[rndIcon]);
 		}
-		console.log("iconTiles array: " + iconTiles);
-		// insert randomizer here
+		//console.log("iconTiles array: " + iconTiles);
+		
+		// randomize order of iconTiles
+		var tempArray = []; // array to hold a copy of randomTiles
+		var randomArray = []; // array to hold randomly ordered version of randomTiles
+		for (i in iconTiles) { // copy randomTiles to tempArray
+		 	tempArray.push(iconTiles[i]);
+		}
+		for (var i = 0; i < iconTiles.length; i++) {
+			if (tempArray.length > 0) {
+				var rnd = Math.floor(Math.random() * (tempArray.length - 1));
+				randomArray.push(tempArray[rnd]);
+				tempArray.splice(rnd, 1);
+		 	}
+		}
+		//console.log("original order (iconTiles): " + iconTiles);
+		//console.log("final order (randomArray): " + randomArray);
 		
 		// create id array
 		for (var i = 0; i < fieldSize; i++) {
@@ -50,13 +67,13 @@
 				idArray.push(i + "-" + j);
 			}
 		}
-		console.log("idArray: " + idArray);
 		
 		// create data array
+		// ** this may get merged with iconTiles....
 		for (i in iconTiles) {
-			dataArray.push(iconTiles[i]);
+			dataArray.push(randomArray[i]);
 		}
-		console.log("dataArray: " + dataArray);
+		//console.log(dataArray);
 		
 		// create class array
 		for (var i = 0; i < fieldSize; i++) {
@@ -64,11 +81,6 @@
 				classArray.push("cell");
 			}
 		}
-		console.log("classArray: " + classArray);
-		
-		// what if all arrays start out as a 1d array and push their data into a second 2d array???
-		var data2DArray = [];
-		var count = 0;
 		
 		function convertArray(array1d,array2d) {
 			var count = 0;
@@ -82,8 +94,7 @@
 			}
 			console.log(array2d);
 		}
-		var id2DArray = [];
-		var class2DArray = [];
+		
 		convertArray(idArray,id2DArray);
 		convertArray(dataArray,data2DArray);
 		convertArray(classArray,class2DArray);
@@ -93,7 +104,14 @@
 		for (var i = 0; i < fieldSize; i++) {
 			message += "<div class='row'>";
 			for (var j = 0; j < fieldSize; j++) {
-				message += "<div id='" + id2DArray[i][j] + "' class='" + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'>Temp</div>";
+				// if data == empty star, display that instead of question mark
+				// else question mark
+				if (data2DArray[i][j] == "star-empty") {
+					message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-star-empty " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
+				} else {
+					message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-question-sign " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
+				}
+				//message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-" + data2DArray[i][j] + " " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
 			}
 			message += "</div>";
 		}
