@@ -1,5 +1,5 @@
 .table {display: table;}
-.row {display: table-row;}
+/*.row {display: table-row;}*/
 .cell {
 	display: table-cell;
 	padding: 15px;
@@ -19,10 +19,13 @@
 .normal {
 	color: red;
 }
+/*
 .flipped {
-	/*color: green;*/
+	color: green;
 	animation: flipping 1s 0s;
 }
+*/
+/*
 @keyframes flipping {
 	0% {
 			transform: scale(1,1);
@@ -33,6 +36,7 @@
 			opacity: 0;
 		}
 }
+*/
 .hideMe {
 	opacity: 0;
 	transition: all 1s ease;
@@ -77,6 +81,20 @@ cool pulsating effect
 .button:hover {
 	background: orange;
 	cursor: pointer;
+}
+
+.border {
+	border: solid thin blue;
+}
+.center-block {
+	text-align: center;
+}
+.noDisplay {
+	color: red;
+	cursor: none;
+	display: table-cell;
+	padding: 15px;
+	font-size: 72px;
 }
 /*
 .table {
