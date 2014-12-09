@@ -23,10 +23,10 @@ $("#buttons").html(fieldMessage);
 
 // Display field based on button clicked
 $(".button").click(function() {
-	var fieldSize = $(this).attr("data"); // get value to be used for fieldSize
-	console.log("fieldSize: " + fieldSize);
+	fieldSize = $(this).attr("data"); // get value to be used for fieldSize
+	//console.log("fieldSize: " + fieldSize);
 	iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
-	console.log("iconNum: " + iconNum);
+	//console.log("iconNum: " + iconNum);
 
 	// start populating arrays	
 	iconTiles = []; // empty icon array	
@@ -39,7 +39,7 @@ $(".button").click(function() {
 		iconTiles.push(icons[rndIcon]);
 		iconTiles.push(icons[rndIcon]);
 	}
-	console.log("iconTiles array: " + iconTiles);
+	//console.log("iconTiles array: " + iconTiles);
 	
 	// randomize order of iconTiles
 	var tempArray = []; // array to hold a copy of randomTiles
@@ -54,8 +54,8 @@ $(".button").click(function() {
 			tempArray.splice(rnd, 1);
 	 	}
 	}
-	console.log("original order (iconTiles): " + iconTiles);
-	console.log("final order (randomArray): " + randomArray);
+	//console.log("original order (iconTiles): " + iconTiles);
+	//console.log("final order (randomArray): " + randomArray);
 	
 	// create id array
 	for (var i = 0; i < fieldSize; i++) {
@@ -63,14 +63,14 @@ $(".button").click(function() {
 			idArray.push(i + "-" + j);
 		}
 	}
-	console.log("idArray: " + idArray);
+	//console.log("idArray: " + idArray);
 	
 	// create data array
 	// ** this may get merged with iconTiles....
 	for (i in iconTiles) {
 		dataArray.push(randomArray[i]);
 	}
-	console.log("dataArray: " + dataArray);
+	//console.log("dataArray: " + dataArray);
 	
 	// create class array
 	for (var i = 0; i < fieldSize; i++) {
@@ -78,7 +78,7 @@ $(".button").click(function() {
 			classArray.push("cell center-block glyphicon");
 		}
 	}
-	console.log("classArray: " + classArray);
+	//console.log("classArray: " + classArray);
 	
 	// set up various 1d arrays into 2d arrays
 	convertArray(idArray,id2DArray,fieldSize);
@@ -88,10 +88,102 @@ $(".button").click(function() {
 	generateField(fieldSize,id2DArray,class2DArray,data2DArray);
 });
 
+var count = 0; // generic number to iterate through icon array when drawing the board
+//var boardSize = 5; // number of rows and columns to create for the board
+var clicks = 0; // count the number of times the user clicks
+var clicksArray = []; // store the clicked icon's data
+
+// game field interactions
+$(document).on("click",".cell",function() {
+	console.log("on icon click, fieldSize is: " + fieldSize);
+	var clickedId = $(this).attr("id");
+	console.log("clickedId: " + clickedId);
+	var clickedData = $(this).attr("data");
+	console.log("clickedData: " + clickedData);
+	var clickedClass = $(this).attr("class");
+	console.log("clickedClass: " + clickedClass);
+	// ** how many times has this been clicked? reset class and display when?
+	// ** push clickedData into a temp array
+	// ** if temp array[0] == [1], it's a match; remove icons from game play; tally score
+	// ** if score == target, game over; you win
+	if ($(this).hasClass("glyphicon-question-sign")) {
+		var first = parseInt(clickedId.substr(0,1)); // with id, find value for first place in data2DArray
+		var second = parseInt(clickedId.substr(2,3)); // with id, find value for second place in data2Darray
+		// reset for column size
+		var tempClassInsert = "";
+		if (fieldSize == 2) { // col-md-6
+			tempClassInsert += " col-md-6 ";
+		} else if (fieldSize == 3) { //col-md-4
+			tempClassInsert += " col-md-4 ";
+		} else if (fieldSize == 4) { //col-md-3
+			tempClassInsert += " col-md-3 ";
+		} else if (fieldSize == 5 || fieldSize == 6) { //col-md-2
+			tempClassInsert = " col-md-2 ";
+		}
+		// replace class array data with data2DArray value and update col-md class
+		class2DArray[first][second] = "cell center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[first][second];
+		//console.log(fieldSize);
+		
+		redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
+
+	}
+	/*
+	
+	if (clicksArray[0] == clicksArray[1]) { // ** work on this so it needs require a third click to act **
+		console.log("you found a match");
+	}
+	if (clicksArray.length == 2) { // if the user has clicked twice
+		console.log("third click, hide all");
+		//$(".cell").removeClass("glyphicon-" + clicksArray[0]).removeClass("glyphicon").removeClass("cell"); // remove all classes
+		//$(".cell").removeClass("glyphicon-" + clicksArray[1]).removeClass("glyphicon").removeClass("cell"); // remove all classes
+		//for (var i = 0; i < boardSize; i++) { // reset classes
+		//	for (var j = 0; j < boardSize; j++) {
+		//		$("#cell-" + i + "-" + j).attr("class","cell glyphicon glyphicon-" + defaultIcon); // this forces the order of the classes to the proper order.
+		//	}
+		//}
+		clicks = 0;
+		clicksArray = []; // empty clicks array
+		clicksArray.push(iconData); // populate clicks array with current click
+		console.log(clicksArray);
+	} else { // user hasn't clicked twice yet
+		clicksArray.push(iconData);
+		console.log("clicksArray: " + clicksArray);
+	}
+	*/
+	// get class
+	// find  glyphicon-question-sign and replace it with  glyphicon-question- + data
+	// store this in a temp array
+	// if temp array[0] == [1], match found, remove icons from game play, add to score
+});
+
 // Utility functions
+function redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray) {
+	var message = "<div class='row'>";
+	message += "<div class='col-md-2'></div>"; // left side
+	message += "<div class='col-md-8'>"; // start of center
+	for (var i = 0; i < fieldSize; i++) {
+	message += "<div class='row'>";
+		if (fieldSize == 5) {
+			message += "<div class='col-md-1'></div>";
+		}
+		for (var j = 0; j < fieldSize; j++) {
+			message += "<div id='" + id2DArray[i][j] + "' class='" + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
+		}
+		if (fieldSize == 5) {
+			message += "<div class='col-md-1'></div>";
+		}
+		message += "</div>";
+	}
+	message += "</div>";
+	// finish up outer elements
+	message += "<div class='col-md-2'></div></div>"; // right side and end of row
+	message += "</div>"; // end of center
+	$("#field").html(message);
+}
+
 function convertArray(array1d,array2d,fieldSize) {
 	//console.log("setting up " + array1d + " to become a 2d array");
-	console.log("executing converArray function. fieldSize = " + fieldSize);
+	//console.log("executing converArray function. fieldSize = " + fieldSize);
 	var count = 0;
 	for (var i = 0; i < fieldSize; i++) {
 		var tempArray = [];
@@ -101,7 +193,7 @@ function convertArray(array1d,array2d,fieldSize) {
 		}
 		array2d.push(tempArray);
 	}
-	console.log(array2d);
+	//console.log(array2d);
 }
 
 function generateField(fieldSize,id2DArray,class2DArray,data2DArray) { // generate game field and display it
@@ -128,86 +220,14 @@ function generateField(fieldSize,id2DArray,class2DArray,data2DArray) { // genera
 		}
 	}
 	
-	//set up outer elements
-	var message = "<div class='row'>";
-	message += "<div class='col-md-2'></div>"; // left side
-	message += "<div class='col-md-8'>"; // start of center
-	for (var i = 0; i < fieldSize; i++) {
-		message += "<div class='row'>";
-			if (fieldSize == 5) {
-				message += "<div class='col-md-1'></div>";
-			}
-		for (var j = 0; j < fieldSize; j++) {
-			message += "<div id='" + id2DArray[i][j] + "' class='" + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
-		}
-		if (fieldSize == 5) {
-			message += "<div class='col-md-1'></div>";
-		}
-		message += "</div>";
-	}
-	message += "</div>";
-	// finish up outer elements
-	message += "</div>"; // end of center
-	message += "<div class='col-md-2'></div></div>"; // right side and end of row
-	$("#field").html(message);
-	fieldSize = 0;
-	id2DArray = [];
-	class2DArray = [];
-	data2DArray = [];
+	redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);
+	//fieldSize = 0;
+	//id2DArray = [];
+	//class2DArray = [];
+	//data2DArray = [];
 }
 
 
-/*
-// Display field based on button clicked
-$(".button").click(function() {
-	var buttonValue = $(this).attr("data");
-	var randomTiles = [];
-
-	// loop through buttonValue * buttonValue / 2
-	// randomly pick an icon
-	// push that random icon twice
-	var loop = (buttonValue * buttonValue) / 2;
-	// if (loop % 2) ....
-	for (var i = 0; i < loop; i++) {
-		var rndIcon = Math.floor(Math.random() * icons.length);
-		randomTiles.push(icons[rndIcon]);
-		randomTiles.push(icons[rndIcon]);
-	}
-	console.log(randomTiles);
-	
-	// randomize order of randomTiles
-	var tempArray = []; // array to hold a copy of randomTiles
-	var randomArray = []; // array to hold randomly ordered version of randomTiles
-	for (i in randomTiles) { // copy randomTiles to tempArray
-	 	tempArray.push(randomTiles[i]);
-	}
-	for (var i = 0; i < randomTiles.length; i++) {
-		if (tempArray.length > 0) {
-			var rnd = Math.floor(Math.random() * (tempArray.length - 1));
-			randomArray.push(tempArray[rnd]);
-			tempArray.splice(rnd, 1);
-	 	}
-	}
-	//console.log("original order (randomTiles): " + randomTiles);
-	//console.log("final order (randomArray): " + randomArray);
-	
-	// build field with icons
-	var tempCount = 0;
-	var field = "<div class='table'>";
-	for (var i = 0; i < buttonValue; i++) {
-	 	field += "<div class='row' id=fieldRow" + i + ">";
-	 	for (var j = 0; j < buttonValue; j++) {
-	 		//console.log(randomArray[tempCount]);
-	 		//field += "<div data='" + randomTiles[tempCount] + "' class='cell glyphicon glyphicon-" + defaultIcon + "' id='fieldCell" + i + "-" + j + "'></div>";
-	 		field += "<div data='" + randomTiles[tempCount] + "' class='cell glyphicon glyphicon-" + randomArray[tempCount] + "' id='fieldCell" + i + "-" + j + "'></div>";
-	 		tempCount++;
-	 	}
-	 	field += "</div>";
-	}
-	field += "</div>";
-	$("#field").html(field);
-});
-*/
 
 
 /*
@@ -216,21 +236,7 @@ var boardSize = 5; // number of rows and columns to create for the board
 var clicks = 0; // count the number of times the user clicks
 var clicksArray = []; // store the clicked icon's data
 
-// create board
-var message ="<div class='table'>";
-for (var i = 0; i < boardSize; i++) {
-	message += "<div class='row'>";
-	for (var j = 0; j < boardSize; j++) {
-		message += "<div id='container-" + i + "-" + j + "' class='container'>";
-		message += "<div id='cell-" + i + "-" + j + "' data='" + icons[count] + "' class='cell glyphicon glyphicon-" + defaultIcon + "'></div>";
-		message += "</div>";
-		count++;
-	}
-	message += "</div>";
-}
-message += "</div>";
-$("#output").html(message);
-// end board creation
+
 
 $(document).ready(function() {
 	$(".cell").click(function() {
