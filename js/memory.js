@@ -92,6 +92,7 @@ var count = 0; // generic number to iterate through icon array when drawing the 
 //var boardSize = 5; // number of rows and columns to create for the board
 var clicks = 0; // count the number of times the user clicks
 var clicksArray = []; // store the clicked icon's data
+var clickedIdArray = []; // store the cliked icon's id
 
 // game field interactions
 $(document).on("click",".cell",function() {
@@ -102,6 +103,9 @@ $(document).on("click",".cell",function() {
 	console.log("clickedData: " + clickedData);
 	var clickedClass = $(this).attr("class");
 	console.log("clickedClass: " + clickedClass);
+	
+	clickedIdArray.push(clickedId);
+	console.log("clickedIdArray: " + clickedIdArray);
 	// ** how many times has this been clicked? reset class and display when?
 	// ** push clickedData into a temp array
 	// ** if temp array[0] == [1], it's a match; remove icons from game play; tally score
@@ -125,7 +129,35 @@ $(document).on("click",".cell",function() {
 		//console.log(fieldSize);
 		
 		redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
-
+	}
+	clicks++;
+	console.log("clicks: " + clicks);
+	if (clicks == 2) {
+		clicksArray.push(clickedData);
+		console.log(clicksArray);
+		console.log(clickedIdArray[0][0] + "," + clickedIdArray[0][2]);
+		console.log(clickedIdArray[1][0] + "," + clickedIdArray[1][2]);
+		if (clicksArray[0] == clicksArray[1]) {
+			console.log(clicksArray[0] + " = " + clicksArray[1]);
+			// remove icon from game field
+			class2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])] = "noDisplay center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])]; // replace cell with noDisplay class in class2DArray
+			class2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])] = "noDisplay center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])]; // replace cell with noDisplay class in class2DArray
+			//console.log(class2DArray);
+			redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
+			
+			// score +2
+			// check if all icons have been matched
+		} else {
+			console.log(clicksArray[0] + " != " + clicksArray[1]);
+			// not a match, reset icon display
+			// redisplay game field
+		}
+		// resets
+		clicksArray = [];
+		clickedIdArray = []; 
+		clicks = 0;
+	} else {
+		clicksArray.push(clickedData);
 	}
 	/*
 	
