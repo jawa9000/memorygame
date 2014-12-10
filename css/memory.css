@@ -96,6 +96,19 @@ cool pulsating effect
 	padding: 15px;
 	font-size: 72px;
 }
+
+#gameTab {
+	border: thin solid blue;
+    border-radius: 0 0 5px 5px;
+    display: none;
+    padding: 5px;
+    text-align: center;
+    width: 60px;
+    cursor: pointer;
+}
+#gameTab:hover {
+	background:#269ABC;
+}
 /*
 .table {
 	display: table;
