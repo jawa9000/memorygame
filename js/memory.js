@@ -93,6 +93,7 @@ var count = 0; // generic number to iterate through icon array when drawing the 
 var clicks = 0; // count the number of times the user clicks
 var clicksArray = []; // store the clicked icon's data
 var clickedIdArray = []; // store the cliked icon's id
+var score = 0;
 
 // game field interactions
 $(document).on("click",".cell",function() {
@@ -144,26 +145,30 @@ $(document).on("click",".cell",function() {
 			class2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])] = "noDisplay center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])]; // replace cell with noDisplay class in class2DArray
 			//console.log(class2DArray);
 			redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
-			
-			// score +2
+			score += 2;
 			// check if all icons have been matched
 		} else {
 			console.log(clicksArray[0] + " != " + clicksArray[1]);
+			
 			// not a match, reset icon display
 			// redisplay game field
 		}
+	} else if (clicks == 3) {
+		class2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])] = "cell center-block glyphicon " + tempClassInsert + " glyphicon-question-sign"; // reset class2DArray
+		class2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])] = "cell center-block glyphicon " + tempClassInsert + " glyphicon-question-sign"; // reset class2DArray
+		class2DArray[first][second] = "cell center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[first][second];
+		redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
 		// resets
 		clicksArray = [];
-		clickedIdArray = []; 
-		clicks = 0;
+		clickedIdArray = [];
+		clickedIdArray.push(clickedId);
+		clicksArray.push(clickedData);
+		
+		clicks = 1;
 	} else {
 		clicksArray.push(clickedData);
 	}
 	/*
-	
-	if (clicksArray[0] == clicksArray[1]) { // ** work on this so it needs require a third click to act **
-		console.log("you found a match");
-	}
 	if (clicksArray.length == 2) { // if the user has clicked twice
 		console.log("third click, hide all");
 		//$(".cell").removeClass("glyphicon-" + clicksArray[0]).removeClass("glyphicon").removeClass("cell"); // remove all classes
