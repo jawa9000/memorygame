@@ -10,19 +10,44 @@ var iconTiles = []; // array to hold a list of icons to be display on the game f
 var icons = ["asterisk","cloud","music","heart","star","user","home","file","lock","headphones","volume-up","book","camera","picture","tint","play","arrow-right","fire","eye-open","thumbs-up","globe","phone","floppy-disk","tower","tree-deciduous"]; // all possible icons
 var iconNum = 0; // number of icons to generate
 var fieldSize = 0; // size of game field
+var fields = ["2x2","3x3","4x4","5x5","6x6"]; // game field sizes
+var message = ""; // variable to hold game status message(s)
+// build menu options section
+// toggle menu options section based on where the game is currently
+	// start of game, display
+	// game started, hide; show menu table
+	// game won, display
 
-
-// Create buttons to select field size
-var fields = ["2x2","3x3","4x4","5x5","6x6"];
-var fieldMessage = "<div class='table'><div class='row'>";
-for (var i = 0; i < fields.length; i++) {
-	fieldMessage += "<div data='" + (i+2) + "' class='button' id='field" + i + "'>" + fields[i] + "</div>";
+//var gameStatus = "start";
+checkGameStatus("start");
+function checkGameStatus(gameStatus) {
+	if (gameStatus == "start") {
+		// show menu options
+		message = "Welcome to the Memory game<br/>To start the game, clicked on one of these buttons";
+		$("#message").html(message);
+		buildFieldButtons();
+	} else if (gameStatus == "active") {
+		// hide menu options
+		$("#menu").slideUp("fast");
+		$("#gameTab").css("display","block").slideDown("fast");
+		// show menu options tab
+	} else if (gameStatus == "won") {
+		$("#gameTab").slideUp("fast");
+		// show menu options
+		buildFieldButtons();
+		// display "you've won" message
+		message = "You won!<br/>To play again, click on one of these buttons";
+		$("#message").html(message);
+	}
+	console.log("gameStatus: " + gameStatus);
 }
-fieldMessage += "</div></div>";
-$("#buttons").html(fieldMessage);
+$("#gameTab").click(function() {
+	console.log("menu button clicked");
+});
 
 // Display field based on button clicked
 $(".button").click(function() {
+	checkGameStatus("active"); // hide menu section
 	fieldSize = $(this).attr("data"); // get value to be used for fieldSize
 	//console.log("fieldSize: " + fieldSize);
 	iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
@@ -194,6 +219,15 @@ $(document).on("click",".cell",function() {
 });
 
 // Utility functions
+function buildFieldButtons() { // Create buttons to select field size
+	var fieldMessage = "<div class='table'><div class='row'>";
+	for (var i = 0; i < fields.length; i++) {
+		fieldMessage += "<div data='" + (i+2) + "' class='button' id='field" + i + "'>" + fields[i] + "</div>";
+	}
+	fieldMessage += "</div></div>";
+	$("#buttons").html(fieldMessage);
+}
+
 function redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray) {
 	var message = "<div class='row'>";
 	message += "<div class='col-md-2'></div>"; // left side
