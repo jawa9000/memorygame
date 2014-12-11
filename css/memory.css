@@ -1,12 +1,12 @@
-.table {display: table;}
-/*.row {display: table-row;}*/
-.cell {
+.gameTable {display: table;}
+.gameRow {display: table-row;}
+.gameCell {
 	display: table-cell;
 	padding: 15px;
 	font-size: 72px;
 	cursor: pointer;
 }
-.cell:hover, .glyphicon-question-sign:hover {
+.gameCell:hover, .glyphicon-question-sign:hover {
 	color: blue;
 	cursor: pointer;
 }
@@ -72,14 +72,14 @@ cool pulsating effect
 	display: table-cell;
 	padding: 5px;
 	border-radius: 5px;
-	background: blue;
+	background: #435b77;
 	margin: 5px;
 	cursor: pointer;
 	color: white;
 	text-align: center;
 }
 .button:hover {
-	background: orange;
+	background: blue;
 	cursor: pointer;
 }
 
@@ -97,17 +97,31 @@ cool pulsating effect
 	font-size: 72px;
 }
 
+#message, #gameTab, #buttons {
+	text-align: center;
+    background: #8abcf7;
+    color: #ffffff;
+    font-family: FontAwesome;
+    font-size: 1.75em;
+}
+
+#message {
+	padding: 5px;
+}
+
 #gameTab {
-	border: thin solid blue;
     border-radius: 0 0 5px 5px;
     display: none;
     padding: 5px;
-    text-align: center;
-    width: 60px;
+    width: 82px;
     cursor: pointer;
+    background: #435b77;
 }
 #gameTab:hover {
-	background:#269ABC;
+	background: blue;
+}
+#buttons {
+	font-size: 3em;
 }
 /*
 .table {
