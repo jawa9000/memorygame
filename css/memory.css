@@ -47,8 +47,8 @@
 }
 
 .container {
-	padding: 5px;
-	border: solid thin blue;
+	padding: 0 5px 5px;
+	/*border: solid thin blue;*/
 	display: table-cell;
 }
 
