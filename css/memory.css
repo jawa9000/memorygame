@@ -97,7 +97,7 @@ cool pulsating effect
 	font-size: 72px;
 }
 
-#message, #gameTab, #buttons {
+#message, #inGameMenu, #buttons {
 	text-align: center;
     background: #8abcf7;
     color: #ffffff;
@@ -109,7 +109,7 @@ cool pulsating effect
 	padding: 5px;
 }
 
-#gameTab {
+#inGameMenu {
     border-radius: 0 0 5px 5px;
     display: none;
     padding: 5px;
@@ -117,7 +117,7 @@ cool pulsating effect
     cursor: pointer;
     background: #435b77;
 }
-#gameTab:hover {
+#inGameMenu:hover {
 	background: blue;
 }
 #buttons {
