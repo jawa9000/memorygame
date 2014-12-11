@@ -21,13 +21,11 @@ var message = ""; // variable to hold game status message(s)
 //var gameStatus = "start";
 checkGameStatus("start");
 function checkGameStatus(gameStatus) {
-	if (gameStatus == "start") {
-		// show menu options
+	if (gameStatus == "start") { // show menu options
 		message = "Welcome to the Memory game<br/>To start the game, clicked on one of these buttons";
 		$("#message").html(message);
 		buildFieldButtons();
-	} else if (gameStatus == "active") {
-		// hide menu options
+	} else if (gameStatus == "active") { // hide menu options, show game field
 		$("#menu").slideUp("fast");
 		$("#gameTab").css("display","block").slideDown("fast");
 		// show menu options tab
@@ -42,7 +40,9 @@ function checkGameStatus(gameStatus) {
 	console.log("gameStatus: " + gameStatus);
 }
 $("#gameTab").click(function() {
-	console.log("menu button clicked");
+	$("#gameTab").slideUp("fast").css("display","none");
+	$("#menu").slideDown("fast");
+	// ** insert game field reset here!!! **
 });
 
 // Display field based on button clicked
