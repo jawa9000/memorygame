@@ -150,10 +150,9 @@ $(document).on("click",".gameCell",function() {
 			console.log(score);
 			// check if all icons have been matched
 			if (score == targetScore) {
-				console.log("You've won the game!");
 				gameTally += score;
-				// show game selectMenu; hide game field
-				$("#tally").html(gameTally);
+				checkGameStatus("won"); // show game selectMenu; hide game field
+				//console.log("You've won the game!");
 			}
 		} else {
 			console.log(clicksArray[0] + " != " + clicksArray[1]);
@@ -187,12 +186,17 @@ function checkGameStatus(gameStatus) {
 		$("#message").html(message);
 		buildFieldButtons();
 	} else if (gameStatus == "active") { // hide selectMenu options, show game field
-		//$("#selectMenu").slideUp("fast").delay(10500);
 		$("#selectMenu").slideUp("fast");
 		$("#inGameMenu").css("display","block").slideDown("fast");
 		// show selectMenu options tab
 	} else if (gameStatus == "won") {
+		console.log("run game won sequence to restart!");
+		$("#field").fadeOut("slow").delay(1000);
 		$("#inGameMenu").slideUp("fast");
+		$("#selectMenu").slideDown("fast");
+		$("#tally").html(gameTally);
+		// ** figure how to reset the game and start it again **
+		gameStatus = "start";
 		// show selectMenu options
 		buildFieldButtons();
 		// display "you've won" message
@@ -280,45 +284,3 @@ function generateField(fieldSize,id2DArray,class2DArray,data2DArray) { // genera
 	//class2DArray = [];
 	//data2DArray = [];
 }
-
-
-
-
-/*
-$(document).ready(function() {
-	$(".cell").click(function() {
-		var iconData = $(this).attr("data"); // get data
-		clicks++;
-		// check to see if both clicked items match
-		if (clicksArray[0] == clicksArray[1]) { // ** work on this so it needs require a third click to act **
-			console.log("you found a match");
-		}
-		if (clicksArray.length == 2) { // if the user has clicked twice
-			console.log("third click, hide all");
-			$(".cell").removeClass("glyphicon-" + clicksArray[0]).removeClass("glyphicon").removeClass("cell"); // remove all classes
-			$(".cell").removeClass("glyphicon-" + clicksArray[1]).removeClass("glyphicon").removeClass("cell"); // remove all classes
-			for (var i = 0; i < boardSize; i++) { // reset classes
-				for (var j = 0; j < boardSize; j++) {
-					$("#cell-" + i + "-" + j).attr("class","cell glyphicon glyphicon-" + defaultIcon); // this forces the order of the classes to the proper order.
-				}
-			}
-			clicks = 0;
-			clicksArray = []; // empty clicks array
-			clicksArray.push(iconData); // populate clicks array with current click
-			console.log(clicksArray);
-		} else { // user hasn't clicked twice yet
-			clicksArray.push(iconData);
-			console.log(clicksArray);
-		}		
-		// this works nicely but it doesn't have a tranistion
-		if ($(this).hasClass("glyphicon glyphicon-" + defaultIcon)) { // if the clicked icon is the question mark, replace it with data's icon
-			$(this).removeClass("glyphicon glyphicon-" + defaultIcon);
-			$(this).addClass("glyphicon glyphicon-" + iconData);
-		} else { // otherwise, replace data's icon with question mark
-			$(this).removeClass("glyphicon glyphicon-" + iconData);
-			$(this).addClass("glyphicon glyphicon-" + defaultIcon);
-		}
-		console.log(iconData);
-	});
-});
-*/
