@@ -6,6 +6,23 @@
 		<!-- Custom styles for this template -->
 		<link href="css/custom.css" rel="stylesheet">
 		<link href="css/memory.css" rel="stylesheet">
+		<style>
+			#inGameMenu, #gameField, #question {
+				display: none;
+			}
+			div[id^='button']:hover {
+				cursor: pointer;
+				background: blue;
+			}
+			div[id^='button'] {
+				text-align: center;
+				cursor: pointer;
+				padding: 5px;
+				margin: 5px;
+				border-radius: 5px;
+				background: orange;
+			}
+		</style>
 		
 		<!-- jQuery -->
 		<script src="js/jquery-2.1.0.min.js"></script>
@@ -14,205 +31,87 @@
 		<script src="js/bootstrap.js"></script>
 	</head>
 	<body>
-		<div id="output"></div>
-		<div id="bootstrap"></div>
-		<div id="field">game field goes here. fieldSize = 5 is tricky. See below</div>
-		<h1>2x2</h1>
-		<div class="row">
-			<div class="col-md-2 border">left 2</div>
-			<div class="col-md-8 border">
+		<div id="container">
+			<div id="start" class="table">
 				<div class="row">
-					<div  class="col-md-6 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-6 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div id="message" class="cell"></div>
+				</div>
+				<div class="row">
+					<div class="table">
+						<div class="row">
+							<div class="col-md-1"></div>
+							<div class="col-md-2" id="button2x2" buttonData="2">2x2</div>
+							<div class="col-md-2" id="button3x3" buttonData="3">3x3</div>
+							<div class="col-md-2" id="button4x4" buttonData="4">4x4</div>
+							<div class="col-md-2" id="button5x5" buttonData="5">5x5</div>
+							<div class="col-md-2" id="button6x6" buttonData="6">6x6</div>
+							<div class="col-md-1"></div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-2 border">right 2</div>
-		</div>
-		<h1>3x3</h1>
-		<div class="row">
-			<div class="col-md-2 border">left 2</div>
-			<div class="col-md-8 border">
+			<div class="table">
 				<div class="row">
-					<div  class="col-md-4 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-4 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-4 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div class="col-md-2"></div>
+					<div class="col-md-2">
+						<div id="inGameMenu">Menu</div>
+					</div>
+					<div class="col-md-6">
+						<div id="question">
+							<p>reset game or continue?</p>
+							<div class="cell" id="buttonReset" buttonData="reset">Reset</div>
+							<div class="cell" id="buttonContinue" buttonData="continue">Continue</div>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
 				</div>
 			</div>
-			<div class="col-md-2 border">right 2</div>
-		</div>
-		<h1>4x4</h1>
-		<div class="row">
-			<div class="col-md-2 border">left 2</div>
-			<div class="col-md-8 border">
+			<div id="gameField" class="table">
 				<div class="row">
-					<div  class="col-md-3 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-3 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-3 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-3 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-				</div>
-			</div>
-			<div class="col-md-2 border">right 2</div>
-		</div>
-		<h1>5x5</h1>
-		<div class="row">
-			<div class="col-md-2 border">left 2</div>
-			<div class="col-md-8 border">
 					<div class="col-md-1"></div>
-			      	<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
-			      	<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
-			      	<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
-			      	<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
-			      	<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>
-			      	<div class="col-md-1"></div>
-			</div>
-			<div class="col-md-2 border">left 2</div>
-		</div>
-		<h1>6x6</h1>
-		<div class="row">
-			<div class="col-md-2 border">left 2</div>
-			<div class="col-md-8 border">
-				<div class="row">
-					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
-					<div  class="col-md-2 center-block glyphicon glyphicon-question-sign cell" data="picture"></div>
+					<div class="col-md-10">
+						<p>game field</p>
+					</div>
+					<div class="col-md-1"></div>
 				</div>
 			</div>
-			<div class="col-md-2 border">right 2</div>
 		</div>
 	</body>
 	<script>
-		// build 2d three arrays
-			// id
-			// classes
-			// data
-		// set up all arrays that if the number of members is odd, handle it consistantly across all arrays
-		var idArray = []; // 1d array of all ids on game field elements
-		var dataArray = []; // 1d array of all data values of game field elements
-		var classArray = []; // 1d array of all classes of game field elements
-		var id2DArray = []; // 2d array converted from 1d array of ids
-		var class2DArray = []; // 2d array converted from 1d array of class
-		var data2DArray = []; // 2d array converted from 1d array of data
-		var iconTiles = []; // array to hold a list of icons to be display on the game field
-		var icons = ["asterisk","cloud","music","heart","star","user","home","file","lock","headphones","volume-up","book","camera","picture","tint","play","arrow-right","fire","eye-open","thumbs-up","globe","phone","floppy-disk","tower","tree-deciduous"]; // all possible icons
-		var fieldSize = 6; // this can change between 2-6
-		
-		var iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
-		
-		if (iconNum % 2) { // if iconNum is odd, subject one and push the 'empty tile' icon into the array
-			iconNum--;
-			iconTiles.push("star-empty"); // this tile doesn't have a match
-		}
-		for (var i = 0; i < iconNum; i++) { // pick a pair of icons and push into array
-			var rndIcon = Math.floor(Math.random() * icons.length);
-			iconTiles.push(icons[rndIcon]);
-			iconTiles.push(icons[rndIcon]);
-		}
-		//console.log("iconTiles array: " + iconTiles);
-		
-		// randomize order of iconTiles
-		var tempArray = []; // array to hold a copy of randomTiles
-		var randomArray = []; // array to hold randomly ordered version of randomTiles
-		for (i in iconTiles) { // copy randomTiles to tempArray
-		 	tempArray.push(iconTiles[i]);
-		}
-		for (var i = 0; i < iconTiles.length; i++) {
-			if (tempArray.length > 0) {
-				var rnd = Math.floor(Math.random() * (tempArray.length - 1));
-				randomArray.push(tempArray[rnd]);
-				tempArray.splice(rnd, 1);
-		 	}
-		}
-		//console.log("original order (iconTiles): " + iconTiles);
-		//console.log("final order (randomArray): " + randomArray);
-		
-		// create id array
-		for (var i = 0; i < fieldSize; i++) {
-			for (var j = 0; j < fieldSize; j++) {
-				idArray.push(i + "-" + j);
+		var gameStatus;
+		$("div[id^='button']").click(function() {
+			var buttonData = $(this).attr("buttonData");
+			console.log("clicked id: " + $(this).attr("id"));
+			console.log("buttonData: " + buttonData);
+			if (buttonData == "2" || buttonData == "3" || buttonData == "4" || buttonData == "5" || buttonData == "6") { // start game
+				console.log("game field selected: " + buttonData);
+				gameStatus = "active";
+				// ** insert game field generation here
+				$("#gameField").fadeIn("fast"); // show game field
+				$("#start").slideUp("fast"); // hide buttons element
+				$("#inGameMenu").slideDown("fast"); // show menu element
+			} else if (buttonData == "reset") { // reset game
+				$("#start").slideDown("fast"); // display buttons to select field size
+				$("#question").slideUp("fast"); // hide question element for selecting reset or continue
+				gameStatus = "reset";
+				// ** insert reset game field routine here
+			} else if (buttonData == "continue") { // continue with current game
+				$("#gameField").fadeIn("fast"); // show game field
+				$("#start").slideUp("fast"); // hide buttons element
+				$("#inGameMenu").slideDown("fast"); // show menu element
+				$("#question").slideUp("fast");
+				gameStatus = "active";
 			}
-		}
+			console.log("Game Status: " + gameStatus);
+		});
 		
-		// create data array
-		// ** this may get merged with iconTiles....
-		for (i in iconTiles) {
-			dataArray.push(randomArray[i]);
-		}
-		//console.log(dataArray);
-		
-		// create class array
-		for (var i = 0; i < fieldSize; i++) {
-			for (var j = 0; j < fieldSize; j++) {
-				classArray.push("cell center-block glyphicon");
-			}
-		}
-		
-		function convertArray(array1d,array2d) {
-			var count = 0;
-			for (var i = 0; i < fieldSize; i++) {
-				var tempArray = [];
-				for (var j = 0; j < fieldSize; j++) {
-					tempArray.push(array1d[count]);
-					count++;
-				}
-				array2d.push(tempArray);
-			}
-			console.log(array2d);
-		}
-		
-		convertArray(idArray,id2DArray);
-		convertArray(dataArray,data2DArray);
-		convertArray(classArray,class2DArray);
-		
-		// update class2DArray??
-		for (var i = 0; i < fieldSize; i++) {
-			for (var j = 0; j < fieldSize; j++) {
-				if (fieldSize == 2) { // col-md-6
-					class2DArray[i][j] += " col-md-6 ";
-				} else if (fieldSize == 3) { //col-md-4
-					class2DArray[i][j] += " col-md-4 ";
-				} else if (fieldSize == 4) { //col-md-3
-					class2DArray[i][j] += " col-md-3 ";
-				} else if (fieldSize == 5 || fieldSize == 6) { //col-md-2
-					class2DArray[i][j] += " col-md-2 ";
-				}
-				if (data2DArray[i][j] == "star-empty") {
-					class2DArray[i][j] += " glyphicon-star-empty ";
-				} else {
-					class2DArray[i][j] += " glyphicon-question-sign ";
-				}
-			}
-		}
-		
-		function generateField() { // generate game field and display it
-			//set up outer elements
-			var message = "<div class='row'>";
-			message += "<div class='col-md-2'></div>"; // left side
-			message += "<div class='col-md-8'>"; // start of center
-			for (var i = 0; i < fieldSize; i++) {
-				message += "<div class='row'>";
-					if (fieldSize == 5) {
-						message += "<div class='col-md-1'></div>";
-					}
-				for (var j = 0; j < fieldSize; j++) {
-					message += "<div id='" + id2DArray[i][j] + "' class='" + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";				
-				    //<div class="col-md-2 center-block glyphicon glyphicon-question-sign"></div>				
-					//message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-" + data2DArray[i][j] + " " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
-				}
-				if (fieldSize == 5) {
-					message += "<div class='col-md-1'></div>";
-				}
-				message += "</div>";
-			}
-			message += "</div>";
-			// finish up outer elements
-			message += "</div>"; // end of center
-			message += "<div class='col-md-2'></div></div>"; // right side and end of row
-			
-			$("#output").html(message);
-		}
-		generateField();
+		$("#inGameMenu").click(function() {
+			console.log("menu button clicked");
+			$("#question").fadeIn("fast");
+			$("#gameField").fadeOut("fast");
+			$("#inGameMenu").slideUp("fast");
+			gameStatus = "paused";
+			console.log("Game Status: " + gameStatus);
+		});
 	</script>
 </html>
