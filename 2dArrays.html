@@ -6,6 +6,11 @@
 		<!-- Custom styles for this template -->
 		<link href="css/custom.css" rel="stylesheet">
 		<link href="css/memory.css" rel="stylesheet">
+		<style>
+			#inGameMenu, #gameField, #question {
+				display: none;
+			}
+		</style>
 		
 		<!-- jQuery -->
 		<script src="js/jquery-2.1.0.min.js"></script>
@@ -14,109 +19,83 @@
 		<script src="js/bootstrap.js"></script>
 	</head>
 	<body>
-		<div id="output"></div>
+		<div id="container">
+			<div id="start" class="table">
+				<div class="row">
+					<div id="message" class="cell"></div>
+				</div>
+				<div class="row">
+					<div class="table">
+						<div class="row">
+							<div class="cell" id="button2x2" buttonData="2">2x2</div>
+							<div class="cell" id="button3x3" buttonData="3">3x3</div>
+							<div class="cell" id="button4x4" buttonData="4">4x4</div>
+							<div class="cell" id="button5x5" buttonData="5">5x5</div>
+							<div class="cell" id="button6x6" buttonData="6">6x6</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="table">
+				<div class="row">
+					<div id="inGameMenu">Menu</div>
+					<div id="question">
+						<p>reset game or continue?</p>
+						<div class="cell" id="reset" buttonData="reset">reset</div>
+						<div class="cell" id="continue" buttonData="continue">continue</div>
+					</div>
+				</div>
+			</div>
+			<div id="gameField" class="table">
+				<div class="row">
+					<p>game field</p>
+				</div>
+			</div>
+			<div >
+			</div>
+		</div>
 	</body>
 	<script>
-		// build 2d three arrays
-			// id
-			// classes
-			// data
-		// set up all arrays that if the number of members is odd, handle it consistantly across all arrays
-		var idArray = []; // 1d array of all ids on game field elements
-		var dataArray = []; // 1d array of all data values of game field elements
-		var classArray = []; // 1d array of all classes of game field elements
-		var id2DArray = []; // 2d array converted from 1d array of ids
-		var class2DArray = []; // 2d array converted from 1d array of class
-		var data2DArray = []; // 2d array converted from 1d array of data
-		var iconTiles = []; // array to hold a list of icons to be display on the game field
-		var icons = ["asterisk","cloud","music","heart","star","user","home","file","lock","headphones","volume-up","book","camera","picture","tint","play","arrow-right","fire","eye-open","thumbs-up","globe","phone","floppy-disk","tower","tree-deciduous"]; // all possible icons
-		var fieldSize = 3; // this can change between 2-6
-		
-		var iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
-		
-		if (iconNum % 2) { // if iconNum is odd, subject one and push the 'empty tile' icon into the array
-			iconNum--;
-			iconTiles.push("star-empty"); // this tile doesn't have a match
-		}
-		for (var i = 0; i < iconNum; i++) { // pick a pair of icons and push into array
-			var rndIcon = Math.floor(Math.random() * icons.length);
-			iconTiles.push(icons[rndIcon]);
-			iconTiles.push(icons[rndIcon]);
-		}
-		//console.log("iconTiles array: " + iconTiles);
-		
-		// randomize order of iconTiles
-		var tempArray = []; // array to hold a copy of randomTiles
-		var randomArray = []; // array to hold randomly ordered version of randomTiles
-		for (i in iconTiles) { // copy randomTiles to tempArray
-		 	tempArray.push(iconTiles[i]);
-		}
-		for (var i = 0; i < iconTiles.length; i++) {
-			if (tempArray.length > 0) {
-				var rnd = Math.floor(Math.random() * (tempArray.length - 1));
-				randomArray.push(tempArray[rnd]);
-				tempArray.splice(rnd, 1);
-		 	}
-		}
-		//console.log("original order (iconTiles): " + iconTiles);
-		//console.log("final order (randomArray): " + randomArray);
-		
-		// create id array
-		for (var i = 0; i < fieldSize; i++) {
-			for (var j = 0; j < fieldSize; j++) {
-				idArray.push(i + "-" + j);
+		var gameStatus;
+		$("div[id^='button']").click(function() {
+			var buttonData = $(this).attr("buttonData");
+			console.log("clicked id: " + $(this).attr("id"));
+			console.log("buttonData: " + buttonData);
+			if (buttonData == "2" || buttonData == "3" || buttonData == "4" || buttonData == "5" || buttonData == "6") {
+				console.log("game field selected: " + buttonData);
+				// show game field
+				$("#gameField").fadeIn("fast");
+				// hide buttons element
+				$("#start").slideUp("fast");
+				// show menu element
+				$("#inGameMenu").slideDown("fast");
+				
+				
+				gameStatus = "active";
 			}
-		}
-		
-		// create data array
-		// ** this may get merged with iconTiles....
-		for (i in iconTiles) {
-			dataArray.push(randomArray[i]);
-		}
-		//console.log(dataArray);
-		
-		// create class array
-		for (var i = 0; i < fieldSize; i++) {
-			for (var j = 0; j < fieldSize; j++) {
-				classArray.push("cell");
+			/*
+			if (buttonData == "yes") {
+				console.log("yes, continue with game");
+				// hide buttons element
+				// show menu element
+				gameStatus = "active";
+			} else if (buttonData == "no") {
+				console.log("no, reset the game");
+				gameStatus = "reset";
+			} else if (buttonData == "continue") {
+				console.log("continue game");
 			}
-		}
+			*/
+		});
 		
-		function convertArray(array1d,array2d) {
-			var count = 0;
-			for (var i = 0; i < fieldSize; i++) {
-				var tempArray = [];
-				for (var j = 0; j < fieldSize; j++) {
-					tempArray.push(array1d[count]);
-					count++;
-				}
-				array2d.push(tempArray);
-			}
-			console.log(array2d);
-		}
-		
-		convertArray(idArray,id2DArray);
-		convertArray(dataArray,data2DArray);
-		convertArray(classArray,class2DArray);
-		
-		// generate game field and display it
-		var message = "<div class='table'>";
-		for (var i = 0; i < fieldSize; i++) {
-			message += "<div class='row'>";
-			for (var j = 0; j < fieldSize; j++) {
-				// if data == empty star, display that instead of question mark
-				// else question mark
-				if (data2DArray[i][j] == "star-empty") {
-					message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-star-empty " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
-				} else {
-					message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-question-sign " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
-				}
-				//message += "<div id='" + id2DArray[i][j] + "' class='glyphicon glyphicon-" + data2DArray[i][j] + " " + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
-			}
-			message += "</div>";
-		}
-		message += "</div>";
-		message += "<div>THIS WORKS! JUST ADD THE RANDOMIZER TO THE DATA ARRAY!!!!</DIV>";
-		$("#output").html(message);
+		$("#inGameMenu").click(function() {
+			console.log("menu button clicked");
+			gameStatus = "paused";
+			$("#question").fadeIn("fast");
+			$("#gameField").fadeOut("fast");
+			$("#start").slideDown("fast");
+			$("#inGameMenu").slideUp("fast");
+			
+		});
 	</script>
 </html>
