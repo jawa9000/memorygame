@@ -22,16 +22,17 @@ var matched = false; // boolean value if the icons match or not
 
 checkGameStatus("start"); // display game field selection options and hide the game selectMenu button
 
-// Display field based on button clicked
-$(".button").click(function() {
-	checkGameStatus("active"); // hide selectMenu section
-	fieldSize = $(this).attr("data"); // get value to be used for fieldSize
-	//console.log("fieldSize: " + fieldSize);
-	iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
-	//console.log("iconNum: " + iconNum);
-	targetScore = Math.floor(fieldSize * fieldSize);
+function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
+	// ** gameStatus input is used to determine if the game is fresh or starting over (reset or won)
+	// ** when starting over, clear classes, field sizes, etc.
+	// start populating arrays
 	
-	// start populating arrays	
+	// ** problem: when the game has been won, it doesn't reset the data in the following arrays. ** 
+	console.log("iconTiles: " + iconTiles);
+	console.log("idArray: " + idArray);
+	console.log("dataArray: " + dataArray);
+	console.log("classArray: " + classArray);
+		
 	iconTiles = []; // empty icon array	
 	if (iconNum % 2) { // if iconNum is odd, subject one and push the 'empty tile' icon into the array
 		iconNum--;
@@ -60,23 +61,24 @@ $(".button").click(function() {
 	}
 	//console.log("original order (iconTiles): " + iconTiles);
 	//console.log("final order (randomArray): " + randomArray);
-	
 	// create id array
+	idArray = [];
 	for (var i = 0; i < fieldSize; i++) {
 		for (var j = 0; j < fieldSize; j++) {
 			idArray.push(i + "-" + j);
 		}
 	}
 	//console.log("idArray: " + idArray);
-	
 	// create data array
 	// ** this may get merged with iconTiles....
+	dataArray = [];
 	for (i in iconTiles) {
 		dataArray.push(randomArray[i]);
 	}
 	//console.log("dataArray: " + dataArray);
 	
 	// create class array
+	classArray = [];
 	for (var i = 0; i < fieldSize; i++) {
 		for (var j = 0; j < fieldSize; j++) {
 			classArray.push("gameCell center-block glyphicon");
@@ -89,6 +91,22 @@ $(".button").click(function() {
 	convertArray(classArray,class2DArray,fieldSize);
 	
 	generateField(fieldSize,id2DArray,class2DArray,data2DArray);
+	checkGameStatus("active"); // hide selectMenu section
+}
+
+// Display field based on button clicked
+$(document).on("click",".button",function() {
+	console.log("button field clicked");
+	fieldSize = $(this).attr("data"); // get value to be used for fieldSize
+	console.log("fieldSize: " + fieldSize);
+	iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
+	//console.log("iconNum: " + iconNum);
+	targetScore = Math.floor(fieldSize * fieldSize);
+	
+	generateIcons(iconNum,targetScore,fieldSize);
+	$("#inGameMenu").slideDown("fast");
+	$("#selectMenu").css("display","none").slideUp("fast");
+	$("#field").fadeIn("fast");
 });
 
 // selectMenu interactions
@@ -191,7 +209,7 @@ function checkGameStatus(gameStatus) {
 		// show selectMenu options tab
 	} else if (gameStatus == "won") {
 		console.log("run game won sequence to restart!");
-		$("#field").fadeOut("slow").delay(1000);
+		$("#field").fadeOut("slow").delay(1000).html("");
 		$("#inGameMenu").slideUp("fast");
 		$("#selectMenu").slideDown("fast");
 		$("#tally").html(gameTally);
@@ -202,6 +220,14 @@ function checkGameStatus(gameStatus) {
 		// display "you've won" message
 		message = "You won!<br/>To play again, click on one of these buttons";
 		$("#message").html(message);
+		console.log("iconTiles: " + iconTiles);
+		console.log("idArray: " + idArray);
+		console.log("dataArray: " + dataArray);
+		console.log("classArray: " + classArray);
+		iconTiles = [];
+		idArray = [];
+		dataArray = [];
+		
 	}
 	//console.log("gameStatus: " + gameStatus);
 }
