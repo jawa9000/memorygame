@@ -10,7 +10,6 @@
 			#inGameMenu, #gameField, #question {
 				display: none;
 			}
-<<<<<<< HEAD
 			div[id^='button']:hover {
 				cursor: pointer;
 				background: blue;
@@ -23,8 +22,6 @@
 				border-radius: 5px;
 				background: orange;
 			}
-=======
->>>>>>> origin/master
 		</style>
 		
 		<!-- jQuery -->
@@ -42,7 +39,6 @@
 				<div class="row">
 					<div class="table">
 						<div class="row">
-<<<<<<< HEAD
 							<div class="col-md-1"></div>
 							<div class="col-md-2" id="button2x2" buttonData="2">2x2</div>
 							<div class="col-md-2" id="button3x3" buttonData="3">3x3</div>
@@ -50,20 +46,12 @@
 							<div class="col-md-2" id="button5x5" buttonData="5">5x5</div>
 							<div class="col-md-2" id="button6x6" buttonData="6">6x6</div>
 							<div class="col-md-1"></div>
-=======
-							<div class="cell" id="button2x2" buttonData="2">2x2</div>
-							<div class="cell" id="button3x3" buttonData="3">3x3</div>
-							<div class="cell" id="button4x4" buttonData="4">4x4</div>
-							<div class="cell" id="button5x5" buttonData="5">5x5</div>
-							<div class="cell" id="button6x6" buttonData="6">6x6</div>
->>>>>>> origin/master
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="table">
 				<div class="row">
-<<<<<<< HEAD
 					<div class="col-md-2"></div>
 					<div class="col-md-2">
 						<div id="inGameMenu">Menu</div>
@@ -76,19 +64,10 @@
 						</div>
 					</div>
 					<div class="col-md-2"></div>
-=======
-					<div id="inGameMenu">Menu</div>
-					<div id="question">
-						<p>reset game or continue?</p>
-						<div class="cell" id="reset" buttonData="reset">reset</div>
-						<div class="cell" id="continue" buttonData="continue">continue</div>
-					</div>
->>>>>>> origin/master
 				</div>
 			</div>
 			<div id="gameField" class="table">
 				<div class="row">
-<<<<<<< HEAD
 					<div class="col-md-1"></div>
 					<div class="col-md-10">
 						<p>game field</p>
@@ -96,13 +75,6 @@
 					<div class="col-md-1"></div>
 				</div>
 			</div>
-=======
-					<p>game field</p>
-				</div>
-			</div>
-			<div >
-			</div>
->>>>>>> origin/master
 		</div>
 	</body>
 	<script>
@@ -111,7 +83,6 @@
 			var buttonData = $(this).attr("buttonData");
 			console.log("clicked id: " + $(this).attr("id"));
 			console.log("buttonData: " + buttonData);
-<<<<<<< HEAD
 			if (buttonData == "2" || buttonData == "3" || buttonData == "4" || buttonData == "5" || buttonData == "6") { // start game
 				console.log("game field selected: " + buttonData);
 				gameStatus = "active";
@@ -132,51 +103,15 @@
 				gameStatus = "active";
 			}
 			console.log("Game Status: " + gameStatus);
-=======
-			if (buttonData == "2" || buttonData == "3" || buttonData == "4" || buttonData == "5" || buttonData == "6") {
-				console.log("game field selected: " + buttonData);
-				// show game field
-				$("#gameField").fadeIn("fast");
-				// hide buttons element
-				$("#start").slideUp("fast");
-				// show menu element
-				$("#inGameMenu").slideDown("fast");
-				
-				
-				gameStatus = "active";
-			}
-			/*
-			if (buttonData == "yes") {
-				console.log("yes, continue with game");
-				// hide buttons element
-				// show menu element
-				gameStatus = "active";
-			} else if (buttonData == "no") {
-				console.log("no, reset the game");
-				gameStatus = "reset";
-			} else if (buttonData == "continue") {
-				console.log("continue game");
-			}
-			*/
->>>>>>> origin/master
 		});
 		
 		$("#inGameMenu").click(function() {
 			console.log("menu button clicked");
-<<<<<<< HEAD
 			$("#question").fadeIn("fast");
 			$("#gameField").fadeOut("fast");
 			$("#inGameMenu").slideUp("fast");
 			gameStatus = "paused";
 			console.log("Game Status: " + gameStatus);
-=======
-			gameStatus = "paused";
-			$("#question").fadeIn("fast");
-			$("#gameField").fadeOut("fast");
-			$("#start").slideDown("fast");
-			$("#inGameMenu").slideUp("fast");
-			
->>>>>>> origin/master
 		});
 	</script>
 </html>
