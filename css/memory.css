@@ -123,6 +123,23 @@ cool pulsating effect
 #buttons {
 	font-size: 3em;
 }
+
+
+#inGameMenu, #gameField, #question {
+	display: none;
+}
+div[id^='button']:hover {
+	cursor: pointer;
+	background: blue;
+}
+div[id^='button'] {
+	text-align: center;
+	cursor: pointer;
+	padding: 5px;
+	margin: 5px;
+	border-radius: 5px;
+	background: orange;
+}
 /*
 .table {
 	display: table;

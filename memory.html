@@ -24,6 +24,52 @@
 		<nav id="navigation" class="navbar navbar-inverse navbar-fixed-top" role="navigation"></nav>
 		<script defer="defer" src="js/navigation.js"></script>
 		<div class="container">
+			<div id="start" class="table">
+				<div class="row">
+					<div id="message" class="cell"></div>
+				</div>
+				<div class="row">
+					<div class="table">
+						<div class="row">
+							<div class="col-md-1"></div>
+							<div class="col-md-2" id="button2x2" buttonData="2">2x2</div>
+							<div class="col-md-2" id="button3x3" buttonData="3">3x3</div>
+							<div class="col-md-2" id="button4x4" buttonData="4">4x4</div>
+							<div class="col-md-2" id="button5x5" buttonData="5">5x5</div>
+							<div class="col-md-2" id="button6x6" buttonData="6">6x6</div>
+							<div class="col-md-1"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="table">
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-2">
+						<div id="inGameMenu">Menu</div>
+					</div>
+					<div class="col-md-6">
+						<div id="question">
+							<p>reset game or continue?</p>
+							<div class="cell" id="buttonReset" buttonData="reset">Reset</div>
+							<div class="cell" id="buttonContinue" buttonData="continue">Continue</div>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+			</div>
+			<div id="gameField" class="table">
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-10">
+						<div id="field"></div>
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+			</div>
+			
+			
+			<!--
 			<div class="row">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
@@ -33,10 +79,11 @@
 						<div id="message"></div>
 						<div id="buttons"></div>
 					</div>
-					<div id="field"></div>
+					
 				</div>
 				<div class="col-md-2"></div>
-			</div>			
+			</div>
+			-->			
 		</div>
 		<footer>
 			<div id="copyright"></div>

@@ -20,14 +20,87 @@ var score = 0; // store score for current game
 var gameTally = 0; // store total score for all games played this session
 var matched = false; // boolean value if the icons match or not
 
+var gameStatus;
+// button listener
+$("div[id^='button']").click(function() {
+	// ** rethink how fieldSize is used with the parameters buttonData.
+	// ** when the continue button is clicked, the fieldSize is set to "continue" instead of a number value from buttonData
+	
+	fieldSize = $(this).attr("buttonData");
+	//console.log("clicked id: " + $(this).attr("id"));
+	//console.log("fieldSize: " + fieldSize);
+	if (fieldSize == "2" || fieldSize == "3" || fieldSize == "4" || fieldSize == "5" || fieldSize == "6") { // start game
+		console.log("game field selected: " + fieldSize);
+		gameStatus = "active";
+		//console.log("menu button clicked");
+		// get button data and set up dimensions of game
+		//fieldSize = $(this).attr("buttonData"); // get value to be used for fieldSize
+		//console.log("fieldSize: " + fieldSize);
+		iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
+		//console.log("iconNum: " + iconNum);
+		targetScore = Math.floor(fieldSize * fieldSize); // if score == targetScore, the current game has been won
+		generateIcons(iconNum,targetScore,fieldSize); // generate icons
+		// toggle game field and menu displays
+		$("#gameField").fadeIn("fast"); // show game field
+		$("#start").slideUp("fast"); // hide buttons element
+		$("#inGameMenu").slideDown("fast"); // show menu element
+	} else if (fieldSize == "reset") { // reset game
+		// toggle game field and menu displays
+		$("#start").slideDown("fast"); // display buttons to select field size
+		$("#question").slideUp("fast"); // hide question element for selecting reset or continue
+		gameStatus = "reset";
+		// ** insert reset game field routine here
+		
+	} else if (fieldSize == "continue") { // continue with current game
+		// toggle game field and menu displays
+		$("#gameField").fadeIn("fast"); // show game field
+		$("#start").slideUp("fast"); // hide buttons element
+		$("#inGameMenu").slideDown("fast"); // show menu element
+		$("#question").slideUp("fast");
+		gameStatus = "active";
+		fieldSize = tempField;
+	}
+	console.log("Game Status: " + gameStatus);
+});
+
+// game menu listener
+$("#inGameMenu").click(function() {
+	$("#question").fadeIn("fast");
+	$("#gameField").fadeOut("fast");
+	$("#inGameMenu").slideUp("fast");
+	gameStatus = "paused";
+	console.log("Game Status: " + gameStatus);
+});
+
+
+/*
+// Display field based on button clicked
+$(document).on("click",".button",function() {
+	//console.log("button field clicked");
+	//fieldSize = $(this).attr("data"); // get value to be used for fieldSize
+	//console.log("fieldSize: " + fieldSize);
+	//iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
+	//console.log("iconNum: " + iconNum);
+	//targetScore = Math.floor(fieldSize * fieldSize);
+	
+	//generateIcons(iconNum,targetScore,fieldSize);
+	$("#inGameMenu").slideDown("fast");
+	$("#selectMenu").css("display","none").slideUp("fast");
+	$("#field").fadeIn("fast");
+});
+*/
+
+
 checkGameStatus("start"); // display game field selection options and hide the game selectMenu button
 
 function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
+	console.log("generateIcons function called.");
 	// ** gameStatus input is used to determine if the game is fresh or starting over (reset or won)
 	// ** when starting over, clear classes, field sizes, etc.
 	// start populating arrays
 	
 	// ** problem: when the game has been won, it doesn't reset the data in the following arrays. ** 
+	//console.log("fieldSize: " + fieldSize);
 	console.log("iconTiles: " + iconTiles);
 	console.log("idArray: " + idArray);
 	console.log("dataArray: " + dataArray);
@@ -94,27 +167,15 @@ function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
 	checkGameStatus("active"); // hide selectMenu section
 }
 
-// Display field based on button clicked
-$(document).on("click",".button",function() {
-	console.log("button field clicked");
-	fieldSize = $(this).attr("data"); // get value to be used for fieldSize
-	console.log("fieldSize: " + fieldSize);
-	iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
-	//console.log("iconNum: " + iconNum);
-	targetScore = Math.floor(fieldSize * fieldSize);
-	
-	generateIcons(iconNum,targetScore,fieldSize);
-	$("#inGameMenu").slideDown("fast");
-	$("#selectMenu").css("display","none").slideUp("fast");
-	$("#field").fadeIn("fast");
-});
 
+/*
 // selectMenu interactions
 $("#inGameMenu").click(function() {
 	$("#inGameMenu").slideUp("fast").css("display","none");
 	$("#selectMenu").slideDown("fast");
 	// ** insert game field reset here!!! **
 });
+*/
 
 
 // game field interactions
@@ -200,9 +261,10 @@ $(document).on("click",".gameCell",function() {
 // Utility functions
 function checkGameStatus(gameStatus) {
 	if (gameStatus == "start") { // show selectMenu options
-		message = "Welcome to the Memory game<br/>To start the game, clicked on one of these buttons";
+		message = "Welcome to the Memory Game<br/>To start the game, click on one of these buttons";
 		$("#message").html(message);
-		buildFieldButtons();
+		// ** replace this function with a different one
+		displayFieldButtons();
 	} else if (gameStatus == "active") { // hide selectMenu options, show game field
 		$("#selectMenu").slideUp("fast");
 		$("#inGameMenu").css("display","block").slideDown("fast");
@@ -216,7 +278,8 @@ function checkGameStatus(gameStatus) {
 		// ** figure how to reset the game and start it again **
 		gameStatus = "start";
 		// show selectMenu options
-		buildFieldButtons();
+		// ** replace this function with a different one
+		displayFieldButtons();
 		// display "you've won" message
 		message = "You won!<br/>To play again, click on one of these buttons";
 		$("#message").html(message);
@@ -232,16 +295,28 @@ function checkGameStatus(gameStatus) {
 	//console.log("gameStatus: " + gameStatus);
 }
 
-function buildFieldButtons() { // Create buttons to select field size
+// ** this function should be removed
+function displayFieldButtons() { // Display game field button options
+	$("#start").slideDown("fast"); // display buttons to select field size
+	$("#question").slideUp("fast"); // hide question element for selecting reset or continue
+	gameStatus = "reset";
+	
+	/* old setup
 	var fieldMessage = "<div class='gameTable'><div class='gameRow'>";
 	for (var i = 0; i < fields.length; i++) {
 		fieldMessage += "<div data='" + (i+2) + "' class='button' id='field" + i + "'>" + fields[i] + "</div>";
 	}
 	fieldMessage += "</div></div>";
 	$("#buttons").html(fieldMessage);
+	*/
 }
 
 function redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray) {
+	console.log("redrawGameField function called.");
+	console.log("fieldSize: " + fieldSize);
+	console.log("id2DArray: " + id2DArray);
+	console.log("class2DArray: " + class2DArray);
+	console.log("data2DArray: " + data2DArray);
 	var message = "<div class='gameRow'>";
 	message += "<div class='col-md-2'></div>"; // left side
 	message += "<div class='col-md-8'>"; // start of center
