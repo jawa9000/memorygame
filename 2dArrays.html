@@ -59,8 +59,8 @@
 					<div class="col-md-6">
 						<div id="question">
 							<p>reset game or continue?</p>
-							<div class="cell" id="buttonReset" buttonData="reset">Reset</div>
-							<div class="cell" id="buttonContinue" buttonData="continue">Continue</div>
+							<div class="cell" id="menuReset" menuData="reset">Reset</div>
+							<div class="cell" id="menuContinue" menuData="continue">Continue</div>
 						</div>
 					</div>
 					<div class="col-md-2"></div>
@@ -90,7 +90,8 @@
 				$("#gameField").fadeIn("fast"); // show game field
 				$("#start").slideUp("fast"); // hide buttons element
 				$("#inGameMenu").slideDown("fast"); // show menu element
-			} else if (buttonData == "reset") { // reset game
+			}
+			/* else if (buttonData == "reset") { // reset game
 				$("#start").slideDown("fast"); // display buttons to select field size
 				$("#question").slideUp("fast"); // hide question element for selecting reset or continue
 				gameStatus = "reset";
@@ -101,8 +102,26 @@
 				$("#inGameMenu").slideDown("fast"); // show menu element
 				$("#question").slideUp("fast");
 				gameStatus = "active";
-			}
+			}*/
 			console.log("Game Status: " + gameStatus);
+		});
+		
+		$("div[id^='menu']").click(function() {
+			var menuData = $(this).attr("menuData");
+			console.log("clicked id: " + $(this).attr("id"));
+			console.log("menuData: " + menuData);
+			if (menuData == "reset") { // reset game
+				$("#start").slideDown("fast"); // display buttons to select field size
+				$("#question").slideUp("fast"); // hide question element for selecting reset or continue
+				gameStatus = "reset";
+				// ** insert reset game field routine here
+			} else if (menuData == "continue") { // continue with current game
+				$("#gameField").fadeIn("fast"); // show game field
+				$("#start").slideUp("fast"); // hide buttons element
+				$("#inGameMenu").slideDown("fast"); // show menu element
+				$("#question").slideUp("fast");
+				gameStatus = "active";
+			}
 		});
 		
 		$("#inGameMenu").click(function() {
