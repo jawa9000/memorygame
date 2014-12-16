@@ -22,10 +22,7 @@ var matched = false; // boolean value if the icons match or not
 
 var gameStatus;
 // button listener
-$("div[id^='button']").click(function() {
-	// ** rethink how fieldSize is used with the parameters buttonData.
-	// ** when the continue button is clicked, the fieldSize is set to "continue" instead of a number value from buttonData
-	
+$("div[id^='button']").click(function() {	
 	fieldSize = $(this).attr("buttonData");
 	//console.log("clicked id: " + $(this).attr("id"));
 	//console.log("fieldSize: " + fieldSize);
@@ -44,21 +41,6 @@ $("div[id^='button']").click(function() {
 		$("#gameField").fadeIn("fast"); // show game field
 		$("#start").slideUp("fast"); // hide buttons element
 		$("#inGameMenu").slideDown("fast"); // show menu element
-	} else if (fieldSize == "reset") { // reset game
-		// toggle game field and menu displays
-		$("#start").slideDown("fast"); // display buttons to select field size
-		$("#question").slideUp("fast"); // hide question element for selecting reset or continue
-		gameStatus = "reset";
-		// ** insert reset game field routine here
-		
-	} else if (fieldSize == "continue") { // continue with current game
-		// toggle game field and menu displays
-		$("#gameField").fadeIn("fast"); // show game field
-		$("#start").slideUp("fast"); // hide buttons element
-		$("#inGameMenu").slideDown("fast"); // show menu element
-		$("#question").slideUp("fast");
-		gameStatus = "active";
-		fieldSize = tempField;
 	}
 	console.log("Game Status: " + gameStatus);
 });
@@ -70,6 +52,24 @@ $("#inGameMenu").click(function() {
 	$("#inGameMenu").slideUp("fast");
 	gameStatus = "paused";
 	console.log("Game Status: " + gameStatus);
+});
+
+$("div[id^='menu']").click(function() {
+	var menuData = $(this).attr("menuData");
+	console.log("clicked id: " + $(this).attr("id"));
+	console.log("menuData: " + menuData);
+	if (menuData == "reset") { // reset game
+		$("#start").slideDown("fast"); // display buttons to select field size
+		$("#question").slideUp("fast"); // hide question element for selecting reset or continue
+		gameStatus = "reset";
+		// ** insert reset game field routine here
+	} else if (menuData == "continue") { // continue with current game
+		$("#gameField").fadeIn("fast"); // show game field
+		$("#start").slideUp("fast"); // hide buttons element
+		$("#inGameMenu").slideDown("fast"); // show menu element
+		$("#question").slideUp("fast");
+		gameStatus = "active";
+	}
 });
 
 
