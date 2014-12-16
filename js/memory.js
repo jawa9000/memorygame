@@ -27,84 +27,79 @@ $("div[id^='button']").click(function() {
 	//console.log("clicked id: " + $(this).attr("id"));
 	//console.log("fieldSize: " + fieldSize);
 	if (fieldSize == "2" || fieldSize == "3" || fieldSize == "4" || fieldSize == "5" || fieldSize == "6") { // start game
-		console.log("game field selected: " + fieldSize);
+		//console.log("game field selected: " + fieldSize);
 		gameStatus = "active";
 		//console.log("menu button clicked");
 		// get button data and set up dimensions of game
-		//fieldSize = $(this).attr("buttonData"); // get value to be used for fieldSize
 		//console.log("fieldSize: " + fieldSize);
 		iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
 		//console.log("iconNum: " + iconNum);
 		targetScore = Math.floor(fieldSize * fieldSize); // if score == targetScore, the current game has been won
 		generateIcons(iconNum,targetScore,fieldSize); // generate icons
 		// toggle game field and menu displays
+		console.log("fading in #gameField");
 		$("#gameField").fadeIn("fast"); // show game field
+		console.log("slideing up #start");
 		$("#start").slideUp("fast"); // hide buttons element
+		console.log("slideing down #inGameMenu");
 		$("#inGameMenu").slideDown("fast"); // show menu element
 	}
-	console.log("Game Status: " + gameStatus);
+	//console.log("Game Status: " + gameStatus);
 });
 
 // game menu listener
 $("#inGameMenu").click(function() {
+	console.log("fading in #question");
 	$("#question").fadeIn("fast");
+	console.log("fading out #gameField");
 	$("#gameField").fadeOut("fast");
+	console.log("sliding up #inGameMenu");
 	$("#inGameMenu").slideUp("fast");
 	gameStatus = "paused";
 	console.log("Game Status: " + gameStatus);
 });
-
+// menu button listener
 $("div[id^='menu']").click(function() {
 	var menuData = $(this).attr("menuData");
-	console.log("clicked id: " + $(this).attr("id"));
-	console.log("menuData: " + menuData);
+	//console.log("clicked id: " + $(this).attr("id"));
+	//console.log("menuData: " + menuData);
 	if (menuData == "reset") { // reset game
+		console.log("sliding down #start");
 		$("#start").slideDown("fast"); // display buttons to select field size
+		console.log("sliding up #question");
 		$("#question").slideUp("fast"); // hide question element for selecting reset or continue
-		gameStatus = "reset";
 		// ** insert reset game field routine here
+		
+		
+		gameStatus = "reset";
+		checkGameStatus(gameStatus);
 	} else if (menuData == "continue") { // continue with current game
+		console.log("fading in #gameField");
 		$("#gameField").fadeIn("fast"); // show game field
+		console.log("sliding up #start");
 		$("#start").slideUp("fast"); // hide buttons element
+		console.log("sliding down #inGameMenu");
 		$("#inGameMenu").slideDown("fast"); // show menu element
+		console.log("sliding up #question");
 		$("#question").slideUp("fast");
 		gameStatus = "active";
 	}
 });
 
-
-/*
-// Display field based on button clicked
-$(document).on("click",".button",function() {
-	//console.log("button field clicked");
-	//fieldSize = $(this).attr("data"); // get value to be used for fieldSize
-	//console.log("fieldSize: " + fieldSize);
-	//iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
-	//console.log("iconNum: " + iconNum);
-	//targetScore = Math.floor(fieldSize * fieldSize);
-	
-	//generateIcons(iconNum,targetScore,fieldSize);
-	$("#inGameMenu").slideDown("fast");
-	$("#selectMenu").css("display","none").slideUp("fast");
-	$("#field").fadeIn("fast");
-});
-*/
-
-
 checkGameStatus("start"); // display game field selection options and hide the game selectMenu button
 
 function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
-	console.log("generateIcons function called.");
+	//console.log("generateIcons function called.");
 	// ** gameStatus input is used to determine if the game is fresh or starting over (reset or won)
 	// ** when starting over, clear classes, field sizes, etc.
 	// start populating arrays
 	
 	// ** problem: when the game has been won, it doesn't reset the data in the following arrays. ** 
 	//console.log("fieldSize: " + fieldSize);
-	console.log("iconTiles: " + iconTiles);
-	console.log("idArray: " + idArray);
-	console.log("dataArray: " + dataArray);
-	console.log("classArray: " + classArray);
+	//console.log("iconTiles: " + iconTiles);
+	//console.log("idArray: " + idArray);
+	//console.log("dataArray: " + dataArray);
+	//console.log("classArray: " + classArray);
 		
 	iconTiles = []; // empty icon array	
 	if (iconNum % 2) { // if iconNum is odd, subject one and push the 'empty tile' icon into the array
@@ -164,7 +159,6 @@ function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
 	convertArray(classArray,class2DArray,fieldSize);
 	
 	generateField(fieldSize,id2DArray,class2DArray,data2DArray);
-	checkGameStatus("active"); // hide selectMenu section
 }
 
 
@@ -209,24 +203,24 @@ $(document).on("click",".gameCell",function() {
 		redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
 	}
 	clicks++;
-	console.log("clicks: " + clicks);
+	//console.log("clicks: " + clicks);
 	if (clicks == 2) {
 		clicksArray.push(clickedData);
-		console.log("clickedIdArray: " + clickedIdArray);
+		//console.log("clickedIdArray: " + clickedIdArray);
 		//console.log(clickedIdArray[0][0] + "," + clickedIdArray[0][2]);
 		//console.log(clickedIdArray[1][0] + "," + clickedIdArray[1][2]);
 		if (clicksArray[0] == clicksArray[1] && clickedIdArray[0] != clickedIdArray[1]) { // clicked icons match and the same icon isn't clicked twice
 			matched = true;
-			console.log(clicksArray[0] + " = " + clicksArray[1]);
+		//	console.log(clicksArray[0] + " = " + clicksArray[1]);
 			// remove icon from game field
 			class2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])] = "noDisplay center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])]; // replace gameCell with noDisplay class in class2DArray
 			class2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])] = "noDisplay center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])]; // replace gameCell with noDisplay class in class2DArray
-			console.log(class2DArray);
+			//console.log(class2DArray);
 			redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
-			console.log(class2DArray);
+			//console.log(class2DArray);
 			score += 2;
 			$("#score").html(score);
-			console.log(score);
+			//console.log(score);
 			// check if all icons have been matched
 			if (score == targetScore) {
 				gameTally += score;
@@ -234,7 +228,7 @@ $(document).on("click",".gameCell",function() {
 				//console.log("You've won the game!");
 			}
 		} else {
-			console.log(clicksArray[0] + " != " + clicksArray[1]);
+			//console.log(clicksArray[0] + " != " + clicksArray[1]);
 			matched = false;
 		}
 	} else if (clicks == 3) {
@@ -266,57 +260,88 @@ function checkGameStatus(gameStatus) {
 		// ** replace this function with a different one
 		displayFieldButtons();
 	} else if (gameStatus == "active") { // hide selectMenu options, show game field
-		$("#selectMenu").slideUp("fast");
-		$("#inGameMenu").css("display","block").slideDown("fast");
+		//$("#start").slideUp("fast");
+		console.log("gameStatus: " + gameStatus);
+		console.log("sliding down #inGameMenu");
+		$("#inGameMenu").slideDown("fast");
 		// show selectMenu options tab
 	} else if (gameStatus == "won") {
 		console.log("run game won sequence to restart!");
+		console.log("fading out #field");
 		$("#field").fadeOut("slow").delay(1000).html("");
+		console.log("sliding up #inGameMenu");
 		$("#inGameMenu").slideUp("fast");
-		$("#selectMenu").slideDown("fast");
+		
+		console.log("sliding down #start");
+		$("#start").slideDown("fast");
 		$("#tally").html(gameTally);
+		// ** replace this function with a different one
+		//displayFieldButtons();
 		// ** figure how to reset the game and start it again **
 		gameStatus = "start";
-		// show selectMenu options
-		// ** replace this function with a different one
-		displayFieldButtons();
-		// display "you've won" message
 		message = "You won!<br/>To play again, click on one of these buttons";
-		$("#message").html(message);
-		console.log("iconTiles: " + iconTiles);
-		console.log("idArray: " + idArray);
-		console.log("dataArray: " + dataArray);
-		console.log("classArray: " + classArray);
+		$("#message").html(message); // display "you've won" message
+		iconNum = 0;
+		targetScore = 0;
+		fieldSize = 0;
 		iconTiles = [];
 		idArray = [];
 		dataArray = [];
+		classArray = [];
+		id2DArray = [];
+		class2DArray = [];
+		data2DArray = [];
+		generateIcons(iconNum,targetScore,fieldSize); // generate icons
 		
+	} else if (gameStatus == "reset") {
+		iconNum = 0;
+		targetScore = 0;
+		fieldSize = 0;
+		iconTiles = [];
+		idArray = [];
+		dataArray = [];
+		classArray = [];
+		id2DArray = [];
+		class2DArray = [];
+		data2DArray = [];
+		//console.log("iconNum: " + iconNum);
+		//console.log("targetScore: " + targetScore);
+		//console.log("fieldSize: " + fieldSize);
+		//console.log("gameStatus: " + gameStatus);
+		//console.log("iconTiles: " + iconTiles);
+		//console.log("idArray: " + idArray);
+		//console.log("dataArray: " + dataArray);
+		//console.log("classArray: " + classArray);
+		//console.log("id2DArray: " + id2DArray);
+		//console.log("class2DArray: " + class2DArray);
+		//console.log("data2DArray: " + data2DArray);
+		//console.log("fadingout #field");
+		$("#field").fadeOut("slow").delay(1000).html("");
+		console.log("sliding up #inGameMenu");
+		$("#inGameMenu").slideUp("fast");
+		console.log("sliding down #start");
+		$("#start").slideDown("fast");
+		
+		generateIcons(iconNum,targetScore,fieldSize); // generate icons
 	}
 	//console.log("gameStatus: " + gameStatus);
 }
 
 // ** this function should be removed
 function displayFieldButtons() { // Display game field button options
+	console.log("sliding down #start");
 	$("#start").slideDown("fast"); // display buttons to select field size
+	console.log("sliding up #question");
 	$("#question").slideUp("fast"); // hide question element for selecting reset or continue
-	gameStatus = "reset";
-	
-	/* old setup
-	var fieldMessage = "<div class='gameTable'><div class='gameRow'>";
-	for (var i = 0; i < fields.length; i++) {
-		fieldMessage += "<div data='" + (i+2) + "' class='button' id='field" + i + "'>" + fields[i] + "</div>";
-	}
-	fieldMessage += "</div></div>";
-	$("#buttons").html(fieldMessage);
-	*/
+	//gameStatus = "reset";
 }
 
 function redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray) {
-	console.log("redrawGameField function called.");
-	console.log("fieldSize: " + fieldSize);
-	console.log("id2DArray: " + id2DArray);
-	console.log("class2DArray: " + class2DArray);
-	console.log("data2DArray: " + data2DArray);
+	//console.log("redrawGameField function called.");
+	//console.log("fieldSize: " + fieldSize);
+	//console.log("id2DArray: " + id2DArray);
+	//console.log("class2DArray: " + class2DArray);
+	//console.log("data2DArray: " + data2DArray);
 	var message = "<div class='gameRow'>";
 	message += "<div class='col-md-2'></div>"; // left side
 	message += "<div class='col-md-8'>"; // start of center
