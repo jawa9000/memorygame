@@ -35,6 +35,10 @@ $("div[id^='button']").click(function() {
 		iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
 		//console.log("iconNum: " + iconNum);
 		targetScore = Math.floor(fieldSize * fieldSize); // if score == targetScore, the current game has been won
+		if (fieldSize == 3 || fieldSize == 5) {
+			targetScore--;
+		}
+		console.log("targetScore: " + targetScore);
 		generateIcons(iconNum,targetScore,fieldSize); // generate icons
 		// toggle game field and menu displays
 		console.log("fading in #gameField");
@@ -169,6 +173,8 @@ $(document).on("click",".gameCell",function() {
 	var clickedClass = $(this).attr("class");
 	//console.log("clickedClass: " + clickedClass);
 	
+	console.log("targetScore: " + targetScore);
+	
 	clickedIdArray.push(clickedId);
 	//console.log("clickedIdArray: " + clickedIdArray);
 	if ($(this).hasClass("gameCell")) {
@@ -206,11 +212,14 @@ $(document).on("click",".gameCell",function() {
 			redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
 			//console.log(class2DArray);
 			score += 2;
+			console.log("score: " + score);
 			$("#score").html(score);
 			//console.log(score);
 			// check if all icons have been matched
 			if (score == targetScore) {
-				gameTally += score;
+				console.log("score: " + score);
+				//gameTally += score;
+				//score = 0;
 				checkGameStatus("won"); // show game selectMenu; hide game field
 				//console.log("You've won the game!");
 			}
@@ -254,19 +263,23 @@ function checkGameStatus(gameStatus) {
 		// show selectMenu options tab
 	} else if (gameStatus == "won") {
 		console.log("run game won sequence to restart!");
-		console.log("fading out #field");
+		//console.log("fading out #field");
 		$("#field").fadeOut("slow").delay(1000).html("");
-		console.log("sliding up #inGameMenu");
+		//console.log("sliding up #inGameMenu");
 		$("#inGameMenu").slideUp("fast");
-		
-		console.log("sliding down #start");
+		//console.log("sliding down #start");
 		$("#start").slideDown("fast");
-		$("#tally").html(gameTally);
-		// ** replace this function with a different one
-		//displayFieldButtons();
+		
+		console.log("score: " + score);
+		console.log("score: " + score + " == targetScore: " + targetScore);
+		
 		// ** figure how to reset the game and start it again **
+		gameTally = gameTally + score; // add current game score to session score
+		message = "You won!<br/>To play again, click on one of these buttons<br/>";
+		message += "Your game score was " + score + " and your session score is " + gameTally;
+		
+		score = 0; // reset score
 		gameStatus = "start";
-		message = "You won!<br/>To play again, click on one of these buttons";
 		$("#message").html(message); // display "you've won" message
 		iconNum = 0;
 		targetScore = 0;
@@ -278,6 +291,11 @@ function checkGameStatus(gameStatus) {
 		id2DArray = [];
 		class2DArray = [];
 		data2DArray = [];
+		$("#field").fadeIn("slow");
+		//console.log("sliding up #inGameMenu");
+		$("#inGameMenu").slideUp("fast");
+		//console.log("sliding down #start");
+		$("#start").slideDown("fast");
 		generateIcons(iconNum,targetScore,fieldSize); // generate icons
 		
 	} else if (gameStatus == "reset") {
