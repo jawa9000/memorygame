@@ -46,17 +46,16 @@ $("div[id^='button']").click(function() {
 	}
 	//console.log("Game Status: " + gameStatus);
 });
-
 // game menu listener
 $("#inGameMenu").click(function() {
-	console.log("fading in #question");
+	//console.log("fading in #question");
 	$("#question").fadeIn("fast");
-	console.log("fading out #gameField");
+	//console.log("fading out #gameField");
 	$("#gameField").fadeOut("fast");
-	console.log("sliding up #inGameMenu");
+	//console.log("sliding up #inGameMenu");
 	$("#inGameMenu").slideUp("fast");
 	gameStatus = "paused";
-	console.log("Game Status: " + gameStatus);
+	//console.log("Game Status: " + gameStatus);
 });
 // menu button listener
 $("div[id^='menu']").click(function() {
@@ -64,23 +63,22 @@ $("div[id^='menu']").click(function() {
 	//console.log("clicked id: " + $(this).attr("id"));
 	//console.log("menuData: " + menuData);
 	if (menuData == "reset") { // reset game
-		console.log("sliding down #start");
+		//console.log("sliding down #start");
 		$("#start").slideDown("fast"); // display buttons to select field size
-		console.log("sliding up #question");
+		//console.log("sliding up #question");
 		$("#question").slideUp("fast"); // hide question element for selecting reset or continue
 		// ** insert reset game field routine here
-		
-		
+
 		gameStatus = "reset";
 		checkGameStatus(gameStatus);
 	} else if (menuData == "continue") { // continue with current game
-		console.log("fading in #gameField");
+		//console.log("fading in #gameField");
 		$("#gameField").fadeIn("fast"); // show game field
-		console.log("sliding up #start");
+		//console.log("sliding up #start");
 		$("#start").slideUp("fast"); // hide buttons element
-		console.log("sliding down #inGameMenu");
+		//console.log("sliding down #inGameMenu");
 		$("#inGameMenu").slideDown("fast"); // show menu element
-		console.log("sliding up #question");
+		//console.log("sliding up #question");
 		$("#question").slideUp("fast");
 		gameStatus = "active";
 	}
@@ -160,17 +158,6 @@ function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
 	
 	generateField(fieldSize,id2DArray,class2DArray,data2DArray);
 }
-
-
-/*
-// selectMenu interactions
-$("#inGameMenu").click(function() {
-	$("#inGameMenu").slideUp("fast").css("display","none");
-	$("#selectMenu").slideDown("fast");
-	// ** insert game field reset here!!! **
-});
-*/
-
 
 // game field interactions
 $(document).on("click",".gameCell",function() {
@@ -316,10 +303,11 @@ function checkGameStatus(gameStatus) {
 		//console.log("class2DArray: " + class2DArray);
 		//console.log("data2DArray: " + data2DArray);
 		//console.log("fadingout #field");
-		$("#field").fadeOut("slow").delay(1000).html("");
-		console.log("sliding up #inGameMenu");
+		//$("#field").fadeOut("slow").delay(1000).html("");
+		$("#field").fadeIn("slow");
+		//console.log("sliding up #inGameMenu");
 		$("#inGameMenu").slideUp("fast");
-		console.log("sliding down #start");
+		//console.log("sliding down #start");
 		$("#start").slideDown("fast");
 		
 		generateIcons(iconNum,targetScore,fieldSize); // generate icons
@@ -403,10 +391,5 @@ function generateField(fieldSize,id2DArray,class2DArray,data2DArray) { // genera
 			}
 		}
 	}
-	
 	redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);
-	//fieldSize = 0;
-	//id2DArray = [];
-	//class2DArray = [];
-	//data2DArray = [];
 }
