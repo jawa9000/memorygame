@@ -129,8 +129,10 @@ function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
 			tempArray.splice(rnd, 1);
 	 	}
 	}
-	//console.log("original order (iconTiles): " + iconTiles);
-	//console.log("final order (randomArray): " + randomArray);
+	console.log("original order (iconTiles): " + iconTiles);
+	console.log("size of iconTiles:" + iconTiles.length);
+	console.log("final order (randomArray): " + randomArray);
+	console.log("size of randomArray: " + randomArray.length);
 	// create id array
 	idArray = [];
 	for (var i = 0; i < fieldSize; i++) {
@@ -166,7 +168,7 @@ function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
 // game field interactions
 $(document).on("click",".gameCell",function() {
 	if (!$(this).hasClass("glyphicon-star-empty")) { // if the clicked icon doesn't have the .glyphicon-star-empty class, assume clicked icon is clickable
-		console.log("clicked icon doesn't have glyphicon-star-empty class");
+		//console.log("clicked icon doesn't have glyphicon-star-empty class");
 		//console.log("on icon click, fieldSize is: " + fieldSize);
 		var clickedId = $(this).attr("id");
 		//console.log("clickedId: " + clickedId);
@@ -386,7 +388,7 @@ function convertArray(array1d,array2d,fieldSize) {
 		}
 		array2d.push(tempArray);
 	}
-	//console.log(array2d);
+	console.log(array2d);
 }
 
 function generateField(fieldSize,id2DArray,class2DArray,data2DArray) { // generate game field and display it
