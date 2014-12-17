@@ -10,81 +10,14 @@
 	color: blue;
 	cursor: pointer;
 }
-
 .glyphicon-question-sign {
 	padding: 15px;
 	font-size: 72px;
 }
-
-.normal {
-	color: red;
-}
-/*
-.flipped {
-	color: green;
-	animation: flipping 1s 0s;
-}
-*/
-/*
-@keyframes flipping {
-	0% {
-			transform: scale(1,1);
-			opacity: 100;
-		}
-	100% {
-			transform: scale(0,1);
-			opacity: 0;
-		}
-}
-*/
-.hideMe {
-	opacity: 0;
-	transition: all 1s ease;
-}
-.showMe {
-	opacity: 100;
-	transition: all 1s ease;
-}
-
 .container {
 	padding: 0 5px 5px;
 	/*border: solid thin blue;*/
 	display: table-cell;
-}
-
-/*
-cool pulsating effect
-@keyframes flipping {
-    0% {color:green}
-    50% {color:yellow}
-    100% {color:green}
-}
-*/
-/*
- * #dd_main2 {
-  transition-property: top, left;
-  transition-duration: 1s, 1s;
-  transition-delay: 0s, 1s;
-}
- */
-
-.button {
-	display: table-cell;
-	padding: 5px;
-	border-radius: 5px;
-	background: #435b77;
-	margin: 5px;
-	cursor: pointer;
-	color: white;
-	text-align: center;
-}
-.button:hover {
-	background: blue;
-	cursor: pointer;
-}
-
-.border {
-	border: solid thin blue;
 }
 .center-block {
 	text-align: center;
@@ -117,22 +50,20 @@ cool pulsating effect
     cursor: pointer;
     background: #435b77;
 }
+/* ** change this color */
 #inGameMenu:hover {
 	background: blue;
 }
-#buttons {
-	font-size: 3em;
-}
-
-
 #inGameMenu, #gameField, #question {
 	display: none;
 }
+/* ** change these colors */
 div[id^='button']:hover {
 	cursor: pointer;
 	background: blue;
 }
 div[id^='button'] {
+	font-size: 3em;
 	text-align: center;
 	cursor: pointer;
 	padding: 5px;
@@ -141,6 +72,7 @@ div[id^='button'] {
 	background: orange;
 }
 
+/* unclicked icon shouldn't have a cursor icon */
 .glyphicon-star-empty {
 	cursor: none !important;
 	color: red;
@@ -148,21 +80,85 @@ div[id^='button'] {
 .glyphicon-star-empty:hover {
 	color: red;
 }
+
+/* clicked animation */
+@-webkit-keyframes pulse-grow {
+	to {
+		-webkit-transform: scale(1.3);
+		transform: scale(1.3);
+		}
+}
+@keyframes pulse-grow {
+	to {
+		-webkit-transform: scale(1.3);
+		transform: scale(1.3);
+	}
+}
+.gameCell {
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+}
+.gameCell:hover, .gameCell:focus, .gameCell:active {
+	-webkit-animation-name: pulse-grow;
+	animation-name: pulse-grow;
+	-webkit-animation-duration: 0.4s;
+	animation-duration: 0.4s;
+	-webkit-animation-timing-function: linear;
+	animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	-webkit-animation-direction: alternate;
+	animation-direction: alternate;
+}
+
+/* undo the hovering effect for the non-clickable icon */
+.glyphicon-star-empty:hover, .glyphicon-star-empty:focus, .glyphicon-star-empty:active {
+	-webkit-animation-name: steady;
+	animation-name: steady;
+}
+@-webkit-keyframes steady {
+	to {
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		}
+}
+@keyframes steady {
+	to {
+		-webkit-transform: scale(1);
+		transform: scale(1);
+	}
+}
+
+
+/* experiments */
 /*
-.table {
-	display: table;
-	margin: 0 auto;
+.flipped {
+	color: green;
+	animation: flipping 1s 0s;
 }
-.row {display: row;}
-.cell {
-	display: table-cell;
-	padding: 0;
-	margin: 0;
-	width: 25px;
-	width: 25px;
-	border: solid thin blue;
-	cursor: pointer;
-	background: #0033CC;
-}
-.cell:hover {background: #006600;}
 */
+/*
+@keyframes flipping {
+	0% {
+			transform: scale(1,1);
+			opacity: 100;
+		}
+	100% {
+			transform: scale(0,1);
+			opacity: 0;
+		}
+}
+*/
+/*
+cool pulsating effect
+@keyframes flipping {
+    0% {color:green}
+    50% {color:yellow}
+    100% {color:green}
+}
+#dd_main2 {
+  transition-property: top, left;
+  transition-duration: 1s, 1s;
+  transition-delay: 0s, 1s;
+}
+ */
