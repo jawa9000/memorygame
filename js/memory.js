@@ -159,92 +159,95 @@ function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
 	convertArray(idArray,id2DArray,fieldSize);
 	convertArray(dataArray,data2DArray,fieldSize);
 	convertArray(classArray,class2DArray,fieldSize);
-	
+	console.log("class2DArray: " + class2DArray);
 	generateField(fieldSize,id2DArray,class2DArray,data2DArray);
 }
 
 // game field interactions
 $(document).on("click",".gameCell",function() {
-	//console.log("on icon click, fieldSize is: " + fieldSize);
-	var clickedId = $(this).attr("id");
-	//console.log("clickedId: " + clickedId);
-	var clickedData = $(this).attr("data");
-	//console.log("clickedData: " + clickedData);
-	var clickedClass = $(this).attr("class");
-	//console.log("clickedClass: " + clickedClass);
-	
-	console.log("targetScore: " + targetScore);
-	
-	clickedIdArray.push(clickedId);
-	//console.log("clickedIdArray: " + clickedIdArray);
-	if ($(this).hasClass("gameCell")) {
-		var first = parseInt(clickedId.substr(0,1)); // with id, find value for first place in data2DArray
-		var second = parseInt(clickedId.substr(2,3)); // with id, find value for second place in data2Darray
-		// reset for column size
-		var tempClassInsert = "";
-		if (fieldSize == 2) { // col-md-6
-			tempClassInsert += " col-md-6 ";
-		} else if (fieldSize == 3) { //col-md-4
-			tempClassInsert += " col-md-4 ";
-		} else if (fieldSize == 4) { //col-md-3
-			tempClassInsert += " col-md-3 ";
-		} else if (fieldSize == 5 || fieldSize == 6) { //col-md-2
-			tempClassInsert = " col-md-2 ";
-		}
-		class2DArray[first][second] = "gameCell center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[first][second]; // replace class array data with data2DArray value and update col-md class
-		//console.log(fieldSize);		
-		redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
-	}
-	clicks++;
-	//console.log("clicks: " + clicks);
-	if (clicks == 2) {
-		clicksArray.push(clickedData);
-		//console.log("clickedIdArray: " + clickedIdArray);
-		//console.log(clickedIdArray[0][0] + "," + clickedIdArray[0][2]);
-		//console.log(clickedIdArray[1][0] + "," + clickedIdArray[1][2]);
-		if (clicksArray[0] == clicksArray[1] && clickedIdArray[0] != clickedIdArray[1]) { // clicked icons match and the same icon isn't clicked twice
-			matched = true;
-		//	console.log(clicksArray[0] + " = " + clicksArray[1]);
-			// remove icon from game field
-			class2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])] = "noDisplay center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])]; // replace gameCell with noDisplay class in class2DArray
-			class2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])] = "noDisplay center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])]; // replace gameCell with noDisplay class in class2DArray
-			//console.log(class2DArray);
-			redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
-			//console.log(class2DArray);
-			score += 2;
-			console.log("score: " + score);
-			$("#score").html(score);
-			//console.log(score);
-			// check if all icons have been matched
-			if (score == targetScore) {
-				console.log("score: " + score);
-				//gameTally += score;
-				//score = 0;
-				checkGameStatus("won"); // show game selectMenu; hide game field
-				//console.log("You've won the game!");
-			}
-		} else {
-			//console.log(clicksArray[0] + " != " + clicksArray[1]);
-			matched = false;
-		}
-	} else if (clicks == 3) {
-		//console.log(class2DArray);
-		if (!matched) {
-			class2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])] = "gameCell center-block glyphicon " + tempClassInsert + " glyphicon-question-sign"; // reset class2DArray
-			class2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])] = "gameCell center-block glyphicon " + tempClassInsert + " glyphicon-question-sign"; // reset class2DArray
-			matched = false;
-		}
-		//console.log(class2DArray);
-		class2DArray[first][second] = "gameCell center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[first][second];		
-		redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
-		// resets
-		clicksArray = [];
-		clickedIdArray = [];
+	if (!$(this).hasClass("glyphicon-star-empty")) { // if the clicked icon doesn't have the .glyphicon-star-empty class, assume clicked icon is clickable
+		console.log("clicked icon doesn't have glyphicon-star-empty class");
+		//console.log("on icon click, fieldSize is: " + fieldSize);
+		var clickedId = $(this).attr("id");
+		//console.log("clickedId: " + clickedId);
+		var clickedData = $(this).attr("data");
+		//console.log("clickedData: " + clickedData);
+		var clickedClass = $(this).attr("class");
+		//console.log("clickedClass: " + clickedClass);
+		//console.log("targetScore: " + targetScore);
 		clickedIdArray.push(clickedId);
-		clicksArray.push(clickedData);
-		clicks = 1;
+		//console.log("clickedIdArray: " + clickedIdArray);
+		if ($(this).hasClass("gameCell")) {
+			var first = parseInt(clickedId.substr(0,1)); // with id, find value for first place in data2DArray
+			var second = parseInt(clickedId.substr(2,3)); // with id, find value for second place in data2Darray
+			// reset for column size
+			var tempClassInsert = "";
+			if (fieldSize == 2) { // col-md-6
+				tempClassInsert += " col-md-6 ";
+			} else if (fieldSize == 3) { //col-md-4
+				tempClassInsert += " col-md-4 ";
+			} else if (fieldSize == 4) { //col-md-3
+				tempClassInsert += " col-md-3 ";
+			} else if (fieldSize == 5 || fieldSize == 6) { //col-md-2
+				tempClassInsert = " col-md-2 ";
+			}
+			class2DArray[first][second] = "gameCell center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[first][second]; // replace class array data with data2DArray value and update col-md class
+			//console.log(fieldSize);		
+			redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
+		}
+		clicks++;
+		//console.log("clicks: " + clicks);
+		if (clicks == 2) {
+			clicksArray.push(clickedData);
+			//console.log("clickedIdArray: " + clickedIdArray);
+			//console.log(clickedIdArray[0][0] + "," + clickedIdArray[0][2]);
+			//console.log(clickedIdArray[1][0] + "," + clickedIdArray[1][2]);
+			if (clicksArray[0] == clicksArray[1] && clickedIdArray[0] != clickedIdArray[1]) { // clicked icons match and the same icon isn't clicked twice
+				matched = true;
+			//	console.log(clicksArray[0] + " = " + clicksArray[1]);
+				// remove icon from game field
+				class2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])] = "noDisplay center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])]; // replace gameCell with noDisplay class in class2DArray
+				class2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])] = "noDisplay center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])]; // replace gameCell with noDisplay class in class2DArray
+				//console.log(class2DArray);
+				redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
+				//console.log(class2DArray);
+				score += 2;
+				console.log("score: " + score);
+				$("#score").html(score);
+				//console.log(score);
+				// check if all icons have been matched
+				if (score == targetScore) {
+					console.log("score: " + score);
+					//gameTally += score;
+					//score = 0;
+					checkGameStatus("won"); // show game selectMenu; hide game field
+					//console.log("You've won the game!");
+				}
+			} else {
+				//console.log(clicksArray[0] + " != " + clicksArray[1]);
+				matched = false;
+			}
+		} else if (clicks == 3) {
+			//console.log(class2DArray);
+			if (!matched) {
+				class2DArray[parseInt(clickedIdArray[0][0])][parseInt(clickedIdArray[0][2])] = "gameCell center-block glyphicon " + tempClassInsert + " glyphicon-question-sign"; // reset class2DArray
+				class2DArray[parseInt(clickedIdArray[1][0])][parseInt(clickedIdArray[1][2])] = "gameCell center-block glyphicon " + tempClassInsert + " glyphicon-question-sign"; // reset class2DArray
+				matched = false;
+			}
+			//console.log(class2DArray);
+			class2DArray[first][second] = "gameCell center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[first][second];		
+			redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
+			// resets
+			clicksArray = [];
+			clickedIdArray = [];
+			clickedIdArray.push(clickedId);
+			clicksArray.push(clickedData);
+			clicks = 1;
+		} else {
+			clicksArray.push(clickedData);
+		}
 	} else {
-		clicksArray.push(clickedData);
+		console.log("clicked icon has glyphicon-star-empty class");
 	}
 });
 
@@ -409,5 +412,6 @@ function generateField(fieldSize,id2DArray,class2DArray,data2DArray) { // genera
 			}
 		}
 	}
+	console.log("class2DArray: " + class2DArray);
 	redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);
 }
