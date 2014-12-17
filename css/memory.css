@@ -140,6 +140,14 @@ div[id^='button'] {
 	border-radius: 5px;
 	background: orange;
 }
+
+.glyphicon-star-empty {
+	cursor: none !important;
+	color: red;
+}
+.glyphicon-star-empty:hover {
+	color: red;
+}
 /*
 .table {
 	display: table;
