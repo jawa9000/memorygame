@@ -38,14 +38,14 @@ $("div[id^='button']").click(function() {
 		if (fieldSize == 3 || fieldSize == 5) {
 			targetScore--;
 		}
-		console.log("targetScore: " + targetScore);
+		//console.log("targetScore: " + targetScore);
 		generateIcons(iconNum,targetScore,fieldSize); // generate icons
 		// toggle game field and menu displays
-		console.log("fading in #gameField");
+		//console.log("fading in #gameField");
 		$("#gameField").fadeIn("fast"); // show game field
-		console.log("slideing up #start");
+		//console.log("slideing up #start");
 		$("#start").slideUp("fast"); // hide buttons element
-		console.log("slideing down #inGameMenu");
+		//console.log("slideing down #inGameMenu");
 		$("#inGameMenu").slideDown("fast"); // show menu element
 	}
 	//console.log("Game Status: " + gameStatus);
@@ -71,8 +71,6 @@ $("div[id^='menu']").click(function() {
 		$("#start").slideDown("fast"); // display buttons to select field size
 		//console.log("sliding up #question");
 		$("#question").slideUp("fast"); // hide question element for selecting reset or continue
-		// ** insert reset game field routine here
-
 		gameStatus = "reset";
 		checkGameStatus(gameStatus);
 	} else if (menuData == "continue") { // continue with current game
@@ -90,83 +88,10 @@ $("div[id^='menu']").click(function() {
 
 checkGameStatus("start"); // display game field selection options and hide the game selectMenu button
 
-function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
-	//console.log("generateIcons function called.");
-	// ** gameStatus input is used to determine if the game is fresh or starting over (reset or won)
-	// ** when starting over, clear classes, field sizes, etc.
-	// start populating arrays
-	
-	// ** problem: when the game has been won, it doesn't reset the data in the following arrays. ** 
-	//console.log("fieldSize: " + fieldSize);
-	//console.log("iconTiles: " + iconTiles);
-	//console.log("idArray: " + idArray);
-	//console.log("dataArray: " + dataArray);
-	//console.log("classArray: " + classArray);
-		
-	iconTiles = []; // empty icon array	
-	if (iconNum % 2) { // if iconNum is odd, subject one and push the 'empty tile' icon into the array
-		iconNum--;
-		iconTiles.push("star-empty"); // this tile doesn't have a match
-		targetScore--;
-	}
-	//console.log(targetScore);
-	for (var i = 0; i < iconNum; i++) { // pick a pair of icons and push into array
-		var rndIcon = Math.floor(Math.random() * icons.length);
-		iconTiles.push(icons[rndIcon]);
-		iconTiles.push(icons[rndIcon]);
-	}
-	//console.log("iconTiles array: " + iconTiles);
-	// randomize order of iconTiles
-	var tempArray = []; // array to hold a copy of randomTiles
-	var randomArray = []; // array to hold randomly ordered version of randomTiles
-	for (i in iconTiles) { // copy randomTiles to tempArray
-	 	tempArray.push(iconTiles[i]);
-	}
-	for (var i = 0; i < iconTiles.length; i++) {
-		if (tempArray.length > 0) {
-			var rnd = Math.floor(Math.random() * (tempArray.length - 1));
-			randomArray.push(tempArray[rnd]);
-			tempArray.splice(rnd, 1);
-	 	}
-	}
-	console.log("original order (iconTiles): " + iconTiles);
-	console.log("size of iconTiles:" + iconTiles.length);
-	console.log("final order (randomArray): " + randomArray);
-	console.log("size of randomArray: " + randomArray.length);
-	// create id array
-	idArray = [];
-	for (var i = 0; i < fieldSize; i++) {
-		for (var j = 0; j < fieldSize; j++) {
-			idArray.push(i + "-" + j);
-		}
-	}
-	//console.log("idArray: " + idArray);
-	// create data array
-	// ** this may get merged with iconTiles....
-	dataArray = [];
-	for (i in iconTiles) {
-		dataArray.push(randomArray[i]);
-	}
-	//console.log("dataArray: " + dataArray);
-	
-	// create class array
-	classArray = [];
-	for (var i = 0; i < fieldSize; i++) {
-		for (var j = 0; j < fieldSize; j++) {
-			classArray.push("gameCell center-block glyphicon");
-		}
-	}
-	//console.log("classArray: " + classArray);
-	// set up various 1d arrays into 2d arrays
-	convertArray(idArray,id2DArray,fieldSize);
-	convertArray(dataArray,data2DArray,fieldSize);
-	convertArray(classArray,class2DArray,fieldSize);
-	console.log("class2DArray: " + class2DArray);
-	generateField(fieldSize,id2DArray,class2DArray,data2DArray);
-}
-
 // game field interactions
 $(document).on("click",".gameCell",function() {
+	// ** test for animation effect
+	
 	if (!$(this).hasClass("glyphicon-star-empty")) { // if the clicked icon doesn't have the .glyphicon-star-empty class, assume clicked icon is clickable
 		//console.log("clicked icon doesn't have glyphicon-star-empty class");
 		//console.log("on icon click, fieldSize is: " + fieldSize);
@@ -214,12 +139,12 @@ $(document).on("click",".gameCell",function() {
 				redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);// redraw game field
 				//console.log(class2DArray);
 				score += 2;
-				console.log("score: " + score);
+				//console.log("score: " + score);
 				$("#score").html(score);
 				//console.log(score);
 				// check if all icons have been matched
 				if (score == targetScore) {
-					console.log("score: " + score);
+					//console.log("score: " + score);
 					//gameTally += score;
 					//score = 0;
 					checkGameStatus("won"); // show game selectMenu; hide game field
@@ -249,7 +174,7 @@ $(document).on("click",".gameCell",function() {
 			clicksArray.push(clickedData);
 		}
 	} else {
-		console.log("clicked icon has glyphicon-star-empty class");
+		//console.log("clicked icon has glyphicon-star-empty class");
 	}
 });
 
@@ -262,27 +187,23 @@ function checkGameStatus(gameStatus) {
 		displayFieldButtons();
 	} else if (gameStatus == "active") { // hide selectMenu options, show game field
 		//$("#start").slideUp("fast");
-		console.log("gameStatus: " + gameStatus);
-		console.log("sliding down #inGameMenu");
+		//console.log("gameStatus: " + gameStatus);
+		//console.log("sliding down #inGameMenu");
 		$("#inGameMenu").slideDown("fast");
 		// show selectMenu options tab
 	} else if (gameStatus == "won") {
-		console.log("run game won sequence to restart!");
+		//console.log("run game won sequence to restart!");
 		//console.log("fading out #field");
 		$("#field").fadeOut("slow").delay(1000).html("");
 		//console.log("sliding up #inGameMenu");
 		$("#inGameMenu").slideUp("fast");
 		//console.log("sliding down #start");
 		$("#start").slideDown("fast");
-		
-		console.log("score: " + score);
-		console.log("score: " + score + " == targetScore: " + targetScore);
-		
-		// ** figure how to reset the game and start it again **
+		//console.log("score: " + score);
+		//console.log("score: " + score + " == targetScore: " + targetScore);
 		gameTally = gameTally + score; // add current game score to session score
 		message = "You won!<br/>To play again, click on one of these buttons<br/>";
 		message += "Your game score was " + score + " and your session score is " + gameTally;
-		
 		score = 0; // reset score
 		gameStatus = "start";
 		$("#message").html(message); // display "you've won" message
@@ -338,11 +259,82 @@ function checkGameStatus(gameStatus) {
 	//console.log("gameStatus: " + gameStatus);
 }
 
+function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
+	//console.log("generateIcons function called.");
+	// start populating arrays
+	//console.log("fieldSize: " + fieldSize);
+	//console.log("iconTiles: " + iconTiles);
+	//console.log("idArray: " + idArray);
+	//console.log("dataArray: " + dataArray);
+	//console.log("classArray: " + classArray);
+		
+	iconTiles = []; // empty icon array	
+	if (iconNum % 2) { // if iconNum is odd, subject one and push the 'empty tile' icon into the array
+		iconNum--;
+		iconTiles.push("star-empty"); // this tile doesn't have a match
+		targetScore--;
+	}
+	//console.log(targetScore);
+	for (var i = 0; i < iconNum; i++) { // pick a pair of icons and push into array
+		var rndIcon = Math.floor(Math.random() * icons.length);
+		iconTiles.push(icons[rndIcon]);
+		iconTiles.push(icons[rndIcon]);
+	}
+	//console.log("iconTiles array: " + iconTiles);
+	// randomize order of iconTiles
+	var tempArray = []; // array to hold a copy of randomTiles
+	var randomArray = []; // array to hold randomly ordered version of randomTiles
+	for (i in iconTiles) { // copy randomTiles to tempArray
+	 	tempArray.push(iconTiles[i]);
+	}
+	for (var i = 0; i < iconTiles.length; i++) {
+		if (tempArray.length > 0) {
+			var rnd = Math.floor(Math.random() * (tempArray.length - 1));
+			randomArray.push(tempArray[rnd]);
+			tempArray.splice(rnd, 1);
+	 	}
+	}
+	//console.log("original order (iconTiles): " + iconTiles);
+	//console.log("size of iconTiles:" + iconTiles.length);
+	//console.log("final order (randomArray): " + randomArray);
+	//console.log("size of randomArray: " + randomArray.length);
+	// create id array
+	idArray = [];
+	for (var i = 0; i < fieldSize; i++) {
+		for (var j = 0; j < fieldSize; j++) {
+			idArray.push(i + "-" + j);
+		}
+	}
+	//console.log("idArray: " + idArray);
+	// create data array
+	// ** this may get merged with iconTiles....
+	dataArray = [];
+	for (i in iconTiles) {
+		dataArray.push(randomArray[i]);
+	}
+	//console.log("dataArray: " + dataArray);
+	
+	// create class array
+	classArray = [];
+	for (var i = 0; i < fieldSize; i++) {
+		for (var j = 0; j < fieldSize; j++) {
+			classArray.push("gameCell center-block glyphicon");
+		}
+	}
+	//console.log("classArray: " + classArray);
+	// set up various 1d arrays into 2d arrays
+	convertArray(idArray,id2DArray,fieldSize);
+	convertArray(dataArray,data2DArray,fieldSize);
+	convertArray(classArray,class2DArray,fieldSize);
+	//console.log("class2DArray: " + class2DArray);
+	generateField(fieldSize,id2DArray,class2DArray,data2DArray);
+}
+
 // ** this function should be removed
 function displayFieldButtons() { // Display game field button options
-	console.log("sliding down #start");
+	//console.log("sliding down #start");
 	$("#start").slideDown("fast"); // display buttons to select field size
-	console.log("sliding up #question");
+	//console.log("sliding up #question");
 	$("#question").slideUp("fast"); // hide question element for selecting reset or continue
 	//gameStatus = "reset";
 }
@@ -388,14 +380,11 @@ function convertArray(array1d,array2d,fieldSize) {
 		}
 		array2d.push(tempArray);
 	}
-	console.log(array2d);
+	//console.log(array2d);
 }
 
 function generateField(fieldSize,id2DArray,class2DArray,data2DArray) { // generate game field and display it
 	// update class2DArray
-	// ** note: there is an issue that if the select field size button is clicked before the game is finished, 
-	// ** the following will append to the class array and mess up the display of the game field. This should not be a problem
-	// ** as the select field size buttons will be hidden during game play.
 	for (var i = 0; i < fieldSize; i++) {
 		for (var j = 0; j < fieldSize; j++) {
 			if (fieldSize == 2) { // col-md-6
@@ -414,6 +403,6 @@ function generateField(fieldSize,id2DArray,class2DArray,data2DArray) { // genera
 			}
 		}
 	}
-	console.log("class2DArray: " + class2DArray);
+	//console.log("class2DArray: " + class2DArray);
 	redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray);
 }
