@@ -5,19 +5,31 @@
 	padding: 15px;
 	font-size: 72px;
 	cursor: pointer;
+	z-index: 0;
+}
+.gameCell:hover {
+	z-index: 1;
+}
+.glyphicon {
+	color: #0288D1;
 }
 .gameCell:hover, .glyphicon-question-sign:hover {
-	color: blue;
+	color: #03A9F4;
 	cursor: pointer;
 }
 .glyphicon-question-sign {
 	padding: 15px;
 	font-size: 72px;
 }
-.container {
-	padding: 0 5px 5px;
-	/*border: solid thin blue;*/
-	display: table-cell;
+.buttonRow { /* handles display of container for buttons */
+	background: #8abcf7;
+	margin: 0 auto;
+    width: 100%;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+.table { /* change Bootstrap's default background color */
+	background: none !important;
 }
 .center-block {
 	text-align: center;
@@ -48,19 +60,20 @@
     padding: 5px;
     width: 82px;
     cursor: pointer;
-    background: #435b77;
+    background: #0288D1;
 }
-/* ** change this color */
 #inGameMenu:hover {
-	background: blue;
+	background: #03A9F4;
 }
 #inGameMenu, #gameField, #question {
 	display: none;
 }
-/* ** change these colors */
+.container {
+	color: #212121;
+}
 div[id^='button']:hover {
 	cursor: pointer;
-	background: blue;
+	background: #03A9F4;
 }
 div[id^='button'] {
 	font-size: 3em;
@@ -69,16 +82,16 @@ div[id^='button'] {
 	padding: 5px;
 	margin: 5px;
 	border-radius: 5px;
-	background: orange;
+	background: #0288D1;
 }
 
 /* unclicked icon shouldn't have a cursor icon */
 .glyphicon-star-empty {
 	cursor: none !important;
-	color: red;
+	color: #212121;
 }
 .glyphicon-star-empty:hover {
-	color: red;
+	color: #212121;
 }
 
 /* clicked animation */
