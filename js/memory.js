@@ -19,8 +19,8 @@ var clickedIdArray = []; // store the cliked icon's id
 var score = 0; // store score for current game
 var gameTally = 0; // store total score for all games played this session
 var matched = false; // boolean value if the icons match or not
-
 var gameStatus;
+
 // button listener
 $("div[id^='button']").click(function() {	
 	fieldSize = $(this).attr("buttonData");
@@ -90,8 +90,6 @@ checkGameStatus("start"); // display game field selection options and hide the g
 
 // game field interactions
 $(document).on("click",".gameCell",function() {
-	// ** test for animation effect
-	
 	if (!$(this).hasClass("glyphicon-star-empty")) { // if the clicked icon doesn't have the .glyphicon-star-empty class, assume clicked icon is clickable
 		//console.log("clicked icon doesn't have glyphicon-star-empty class");
 		//console.log("on icon click, fieldSize is: " + fieldSize);
@@ -345,6 +343,7 @@ function redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray) {
 	//console.log("id2DArray: " + id2DArray);
 	//console.log("class2DArray: " + class2DArray);
 	//console.log("data2DArray: " + data2DArray);
+	
 	var message = "<div class='gameRow'>";
 	message += "<div class='col-md-2'></div>"; // left side
 	message += "<div class='col-md-8'>"; // start of center
@@ -366,6 +365,26 @@ function redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray) {
 	message += "<div class='col-md-2'></div></div>"; // right side and end of row
 	message += "</div>"; // end of center
 	$("#field").html(message);
+
+	switch(fieldSize) { // based on fieldSize, insert a padding value on each .gameCell element to properly space each cell apart
+		case "2":
+			$(".gameCell").css("padding","2px 11px");
+			break;
+		case "3":
+			$(".gameCell").css("padding","2px 12px");
+			break;
+		case "4":
+			$(".gameCell").css("padding","2px 16px");
+			break;
+		case "5":
+			$(".gameCell").css("padding","2px 22px");
+			break;
+		case "6":
+			$(".gameCell").css("padding","2px 18px");
+			break;
+		default:
+			$(".gameCell").css("padding","2px 22px"); // not a very good spacing but it's a fallback value
+	}
 }
 
 function convertArray(array1d,array2d,fieldSize) {
