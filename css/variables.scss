@@ -1,0 +1,15 @@
+$starEmptyColor: #212121;
+$primiaryColor: #0288D1;
+$secondarColor: #03A9F4;
+$background: #8abcf7;
+$fontSize: 72px;
+
+%colorCursor {
+    color: $secondarColor;
+    cursor: pointer;
+}
+
+@mixin padMargin ($padding: 15px, $margin: 0) {
+  padding: $padding; 
+  margin: $margin;
+  }

@@ -1,0 +1,195 @@
+@import "variables";
+
+/*
+ * %myRule {...}
+ * extend $myRule
+ * extend anotherRule
+ * @mixin mixin ($var, $var1) {color: $var; font-size: $var1; ...}
+ * include mixin
+ */
+
+
+
+.gameTable {display: table;}
+.gameRow {display: table-row;}
+.gameCell {
+  display: table-cell;
+  font-size: $fontSize;
+  cursor: pointer;
+  z-index: 0;
+  @include padMargin;
+  
+  &:hover {
+    z-index: 1;
+    @extend %colorCursor;
+  }
+}
+
+.glyphicon {
+  color: $primiaryColor;
+}
+.glyphicon-question-sign {
+  @include padMargin;
+  font-size: $fontSize;
+  
+  &:hover {
+    @extend %colorCursor;
+  }
+}
+.buttonRow { /* handles display of container for buttons */
+    background: $background;
+    margin: 0 auto;
+    width: 100%;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+.table { /* change Bootstrap's default background color */
+  background: none !important;
+}
+.center-block {
+  text-align: center;
+}
+.noDisplay {
+  color: red;
+  cursor: none;
+  display: table-cell;
+  @include padMargin;
+  font-size: $fontSize;
+}
+
+#questionContainer, #message, #inGameMenu, #buttons {
+    text-align: center;
+    background: $background;
+    color: #ffffff;
+    font-family: FontAwesome;
+    font-size: 1.75em;
+}
+
+#message {
+  @include padMargin(5px,0);
+}
+
+#inGameMenu {
+    border-radius: 0 0 5px 5px;
+    display: none;
+    padding: 5px;
+    width: 82px;
+    cursor: pointer;
+    background: $primiaryColor;
+    
+    &:hover {
+      background: $secondarColor;
+    }
+}
+#inGameMenu, #gameField, #question {
+  display: none;
+}
+.container {
+  color: $starEmptyColor;
+}
+
+// general button setup
+div[id^='button'], #menuReset, #menuContinue {
+  font-size: 3em;
+  text-align: center;
+  cursor: pointer;
+  @include padMargin(5px,5px);
+  border-radius: 15px;
+  background: $primiaryColor;
+  
+  &:hover {
+    @extend %colorCursor;
+  }
+}
+
+/* unclickable icon shouldn't have a cursor */
+.glyphicon-star-empty {
+  cursor: none !important;
+  color: $starEmptyColor;
+  
+  &:hover {
+    color: $starEmptyColor;
+  }
+}
+
+/* clicked animation */
+@-webkit-keyframes pulse-grow {
+  to {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+    }
+}
+@keyframes pulse-grow {
+  to {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+}
+.gameCell {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.gameCell:hover, .gameCell:focus, .gameCell:active {
+  -webkit-animation-name: pulse-grow;
+  animation-name: pulse-grow;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
+}
+
+/* undo the hovering effect for the non-clickable icon */
+.glyphicon-star-empty:hover, .glyphicon-star-empty:focus, .glyphicon-star-empty:active {
+  -webkit-animation-name: steady;
+  animation-name: steady;
+}
+@-webkit-keyframes steady {
+  to {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    }
+}
+@keyframes steady {
+  to {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+
+/* experiments */
+/*
+.flipped {
+  color: green;
+  animation: flipping 1s 0s;
+}
+*/
+/*
+@keyframes flipping {
+  0% {
+      transform: scale(1,1);
+      opacity: 100;
+    }
+  100% {
+      transform: scale(0,1);
+      opacity: 0;
+    }
+}
+*/
+/*
+cool pulsating effect
+@keyframes flipping {
+    0% {color:green}
+    50% {color:yellow}
+    100% {color:green}
+}
+#dd_main2 {
+  transition-property: top, left;
+  transition-duration: 1s, 1s;
+  transition-delay: 0s, 1s;
+}
+ */
