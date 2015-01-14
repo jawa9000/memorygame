@@ -22,7 +22,7 @@ var matched = false; // boolean value if the icons match or not
 var gameStatus;
 
 // button listener
-$("div[id^='button']").click(function() {	
+$("button[id^='button']").click(function() {	
 	fieldSize = $(this).attr("buttonData");
 	//console.log("clicked id: " + $(this).attr("id"));
 	//console.log("fieldSize: " + fieldSize);
