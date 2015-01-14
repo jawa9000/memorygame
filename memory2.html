@@ -1,107 +1,117 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<link href="css/custom.css" rel="stylesheet">
-	<link href="css/memory.css" rel="stylesheet">
-    <script src="js/jquery-2.1.0.min.js"></script>
-    <script type="text/javascript">
-$(document).ready(function() {
-var idArray = [];
-var dataArray = [];
-var classArray = [];
-var icons = ["asterisk","cloud","music","heart","star","user","home","file","lock","headphones","volume-up","book","camera","picture","tint","play","arrow-right","fire","eye-open","thumbs-up","globe","phone","floppy-disk","tower","tree-deciduous"]; // all possible icons
-var defaultIcon = "question-sign";
-var fieldSize = 0;
-var score = 0;
-var goalArray = [4, 8, 16, 24, 36];
-var goal = 0;
-var randomTiles = []; // array to hold a list of icons to be display on the game field
-var randomTiles2D = []; // convert randomTiles to 2d array
-
-function buildField() {		
-	// pick random icons and store them in an array
-	var fieldSize = 3; // ** temp variable
-	var iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
-	
-	if (iconNum % 2) { // if iconNum is odd, subject one and push the 'empty tile' icon into the array
-		iconNum--;
-		randomTiles.push("star-empty"); // this tile doesn't have a match
-	}
-	for (var i = 0; i < iconNum; i++) { // pick a pair of icons and push into array
-		var rndIcon = Math.floor(Math.random() * icons.length);
-		randomTiles.push(icons[rndIcon]);
-		randomTiles.push(icons[rndIcon]);
-	}
-	// randomize order of randomTiles
-	var tempArray = []; // array to hold a copy of randomTiles
-	var randomArray = []; // array to hold randomly ordered version of randomTiles
-	for (i in randomTiles) { // copy randomTiles to tempArray
-	 	tempArray.push(randomTiles[i]);
-	}
-	for (var i = 0; i < randomTiles.length; i++) {
-		if (tempArray.length > 0) {
-			var rnd = Math.floor(Math.random() * (tempArray.length - 1));
-			randomArray.push(tempArray[rnd]);
-			tempArray.splice(rnd, 1);
-	 	}
-	}
-	console.log(randomTiles);
-	//randomTiles2D = [];
-	//while(randomTiles.length) {
-	//	randomTiles2D.push(randomTiles.splice(0,fieldSize));
-	//}
-	//console.log(randomTiles2D);
-	
-	for (var i = 0; i < 6; i++) {
-		var tempIdArray = [];
-		var tempDataArray = [];
-		var tempClassArray = [];
-		for (var j = 0; j < 6; j++) {
-			tempIdArray.push("icon" + i + "-" + j);
-			tempDataArray.push(i + "-" + j);
-			tempClassArray.push("cell");
-		}
-	idArray.push(tempIdArray);
-	dataArray.push(tempDataArray);
-	classArray.push(tempClassArray);
-}
-
-var count = 0;
-var field = "<div class='table'>";
-for (var i = 0; i < 6; i++) {
-	field += "<div class='row'>";
-	for (var j = 0; j < 6; j++) {
-		field += "<div id='" + idArray[i][j] + "' data='" + randomTiles[count] + "' class='" + classArray[i][j] + "'>000</div>";
-		console.log(randomTiles[count]);
-		count++;
-	}
-	field += "</div>";
-}
-field += "</div>";
-//$("#output").html(field);
-
-//replace data property with randomTiles values
-for (var i = 0; i < count; i++) {
-	//get id
-	// get data
-	// replace data
-}
-
-
-$("#message").html(field); // output field
-}
-buildField();
-
-
-});
-
-    </script>
-    <style>
-        
-    </style>
+	<title>Memory</title>
+		
+		<!-- Bootstrap core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		
+		<!-- Custom styles for this template -->
+		<link href="css/custom.css" rel="stylesheet">
+		<link href="css/memory.css" rel="stylesheet">
+		
+		<!-- jQuery -->
+		<script src="js/jquery-2.1.0.min.js"></script>
+		
+		<!-- Bootstrap main javascript -->
+		<script src="js/bootstrap.js"></script>
+	    <script type="text/javascript">
+	    	$(document).ready(function() {
+	    		var message = "";
+	    		for (var i = 0; i < 6; i++) {
+	    			message += "<div class='gameRow'>";
+	    			for (var j = 0; j < 6; j++) {
+	    				message += "<div id='" + i + "-" + j + "' class='gameCell glyphicon glyphicon-question-sign'></div>";
+	    			}
+	    			message += "</div>";
+	    		}
+	    		$("#field").html(message);
+	    	});
+	    </script>
+	    <style>
+	    	#gameField {display: block;}  
+	    	#field {
+	    		margin: 0 auto;
+	    		display: table;
+	    	}  
+	    </style>
 </head>
 <body>
-    <div id="message"></div>
+    <nav id="navigation" class="navbar navbar-inverse navbar-fixed-top" role="navigation"></nav>
+		<script defer="defer" src="js/navigation.js"></script>
+		<div class="container">
+			<div id="start" class="table">
+				<div class="row">
+					<div id="message" class="cell">
+						Welcome to the Memory Game
+						<br>
+						To start the game, click on one of these buttons
+					</div>
+				</div>
+				<div class="row">
+					<div class="table">
+						<div class="row buttonRow">
+							<!--
+							<div class="col-md-1"></div>
+							<div class="col-md-2" id="button2x2" buttonData="2">2x2</div>
+							<div class="col-md-2" id="button3x3" buttonData="3">3x3</div>
+							<div class="col-md-2" id="button4x4" buttonData="4">4x4</div>
+							<div class="col-md-2" id="button5x5" buttonData="5">5x5</div>
+							<div class="col-md-2" id="button6x6" buttonData="6">6x6</div>
+							<div class="col-md-1"></div>
+							-->
+							<div class="col-md-1"></div>
+							<div class="col-md-10 center-block">
+								<div class="btn-toolbar btn-group-lg" role="toolbar" aria-label="fieldSize">
+									<button id="button2x2" buttonData="2" type="button" class="btn btn-default">2x2</button>
+									<button id="button3x3" buttonData="3" type="button" class="btn btn-default">3x3</button>
+									<button id="button4x4" buttonData="4" type="button" class="btn btn-default">4x4</button>
+									<button id="button5x5" buttonData="5" type="button" class="btn btn-default">5x5</button>
+									<button id="button6x6" buttonData="6" type="button" class="btn btn-default">6x6</button>
+								</div>
+							</div>
+							<div class="col-md-1"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="table">
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-2">
+						<div id="inGameMenu">Menu</div>
+					</div>
+					<div class="col-md-6">
+						<div id="question">
+							<div id="questionContainer">
+								<p>reset game or continue?</p>
+								<div class="table">
+									<div class="row buttonRow">
+										<div class="col-md-4"></div>
+										<div class="col-md-2" id="menuReset" menuData="reset">Reset</div>
+										<div class="col-md-2" id="menuContinue" menuData="continue">Continue</div>
+										<div class="col-md-4"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+			</div>
+			<div id="score"></div>
+			<div id="gameField" class="table">
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-10">
+						<div class="center-block" id="field"></div>
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+			</div>		
+		</div>
+		<footer>
+			<div id="copyright"></div>
+		</footer>
 </body>
 </html>
