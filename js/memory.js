@@ -62,7 +62,7 @@ $("#inGameMenu").click(function() {
 	//console.log("Game Status: " + gameStatus);
 });
 // menu button listener
-$("div[id^='menu']").click(function() {
+$("button[id^='menu']").click(function() {
 	var menuData = $(this).attr("menuData");
 	//console.log("clicked id: " + $(this).attr("id"));
 	//console.log("menuData: " + menuData);
