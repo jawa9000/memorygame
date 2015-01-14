@@ -12,4 +12,8 @@ $fontSize: 72px;
 @mixin padMargin ($padding: 15px, $margin: 0) {
   padding: $padding; 
   margin: $margin;
-  }
+}
+
+@mixin borderRadius($topLeft: 0, $topRight: 0, $bottomRight: 7px, $bottomLeft: 7px) {
+	border-radius: $topLeft $topRight $bottomRight $bottomLeft;
+}

@@ -36,15 +36,19 @@
     @extend %colorCursor;
   }
 }
+
 .buttonRow { /* handles display of container for buttons */
     background: $background;
     margin: 0 auto;
     width: 100%;
-    border-bottom-left-radius: 7px;
-    border-bottom-right-radius: 7px;
+    @include borderRadius;
 }
 .table { /* change Bootstrap's default background color */
   background: none !important;
+}
+.noBottomMargin {
+	margin-top: -20px; // offset for Bootstraps' table margin
+	transform: translateY(-1px); // offset push for min-height of col-md-#
 }
 .center-block {
   text-align: center;
@@ -64,13 +68,16 @@
     font-family: FontAwesome;
     font-size: 1.75em;
 }
+#questionContainer {
+	@include borderRadius(0,0,15px,15px);
+}
 
 #message {
   @include padMargin(5px,0);
 }
 
 #inGameMenu {
-    border-radius: 0 0 5px 5px;
+	@include borderRadius;
     display: none;
     padding: 5px;
     width: 82px;
@@ -84,6 +91,7 @@
 #inGameMenu, #gameField, #question {
   display: none;
 }
+
 .container {
   color: $starEmptyColor;
 }
@@ -94,12 +102,30 @@ div[id^='button'], #menuReset, #menuContinue {
   text-align: center;
   cursor: pointer;
   @include padMargin(5px,5px);
-  border-radius: 15px;
+  @include borderRadius(15px,15px,15px,15px);
   background: $primiaryColor;
   
   &:hover {
     @extend %colorCursor;
   }
+}
+/* bootstrap button override */
+.btn-toolbar {
+	padding: 0 0 15px;
+}
+.btn-group-lg > .btn {
+	font-size: 48px;
+	@include borderRadius(15px,15px,15px,15px);
+}
+.btn-default {
+	background: $primiaryColor;
+	border-color: $primiaryColor;
+    color: $starEmptyColor;
+    &:hover {
+    	background: $primiaryColor;
+		border-color: $primiaryColor;
+	    color: $secondarColor;
+    }
 }
 
 /* unclickable icon shouldn't have a cursor */
