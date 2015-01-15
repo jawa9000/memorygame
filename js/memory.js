@@ -42,27 +42,37 @@ $("button[id^='button']").click(function() {
 		generateIcons(iconNum,targetScore,fieldSize); // generate icons
 		// toggle game field and menu displays
 		//console.log("fading in #gameField");
-		$("#gameField").fadeIn("fast"); // show game field
+		//$("#gameField").fadeIn("fast"); // show game field
+		$("#gameField").slideDown("fast"); // show game field
 		//console.log("slideing up #start");
 		$("#start").slideUp("fast"); // hide buttons element
+		//$("#start").fadeOut("fast"); // hide buttons element
 		//console.log("slideing down #inGameMenu");
 		$("#inGameMenu").slideDown("fast"); // show menu element
+		//$("#inGameMenu").fadeIn("fast"); // show menu element
 		$("#score").slideDown("fast"); // show scores
+		//$("#score").fadeIn("fast"); // show scores
 	}
 	//console.log("Game Status: " + gameStatus);
 });
+
 // game menu listener
 $("#inGameMenu").click(function() {
 	//console.log("fading in #question");
-	$("#question").fadeIn("fast");
+	//$("#question").fadeIn("fast");
+	$("#question").slideDown("fast");
 	//console.log("fading out #gameField");
-	$("#gameField").fadeOut("fast");
+	//$("#gameField").fadeOut("fast");
+	$("#gameField").slideUp("fast");
 	//console.log("sliding up #inGameMenu");
 	$("#inGameMenu").slideUp("fast");
+	//$("#inGameMenu").fadeOut("fast");
 	$("#score").slideUp("fast"); // hide scores
+	//$("#score").fadeOut("fast"); // hide scores
 	gameStatus = "paused";
 	//console.log("Game Status: " + gameStatus);
 });
+
 // menu button listener
 $("button[id^='menu']").click(function() {
 	var menuData = $(this).attr("menuData");
@@ -74,11 +84,13 @@ $("button[id^='menu']").click(function() {
 		//console.log("sliding up #question");
 		$("#question").slideUp("fast"); // hide question element for selecting reset or continue
 		$("#score").slideUp("fast"); // hide scores
+		//$("#score").fadeOut("fast"); // hide scores
 		gameStatus = "reset";
 		checkGameStatus(gameStatus);
 	} else if (menuData == "continue") { // continue with current game
 		//console.log("fading in #gameField");
-		$("#gameField").fadeIn("fast"); // show game field
+		//$("#gameField").fadeIn("fast"); // show game field
+		$("#gameField").slideDown("fast"); // show game field
 		//console.log("sliding up #start");
 		$("#start").slideUp("fast"); // hide buttons element
 		//console.log("sliding down #inGameMenu");
@@ -187,10 +199,11 @@ function checkGameStatus(gameStatus) {
 		message = "Welcome to the Memory Game<br/>To start the game, click on one of these buttons";
 		$("#message").html(message);
 		$("#score").slideUp("fast");
+		//$("#score").fadeOut("fast");
 		// ** replace this function with a different one
 		displayFieldButtons();
 	} else if (gameStatus == "active") { // hide selectMenu options, show game field
-		//$("#start").slideUp("fast");
+		$("#start").slideUp("fast");
 		console.log("gameStatus: " + gameStatus);
 		//console.log("sliding down #inGameMenu");
 		$("#inGameMenu").slideDown("fast");
@@ -202,14 +215,17 @@ function checkGameStatus(gameStatus) {
 		console.log("gameStatus: " + gameStatus);
 		//console.log("run game won sequence to restart!");
 		//console.log("fading out #field");
-		$("#field").fadeOut("slow").delay(1000).html("");
+		//$("#field").fadeOut("slow").delay(1000).html("");
+		//$("#field").fadeOut("slow").html("");
+		$("#field").slideUp("slow").html("");
+		//$("#field").slideUp("slow").delay(1000).html("");
 		//console.log("sliding up #inGameMenu");
-		//$("#inGameMenu").slideUp("fast");
+		$("#inGameMenu").slideUp("fast");
+		$("#score").slideUp("fast");
 		//console.log("sliding down #start");
-		//$("#start").slideDown("fast");
+		$("#start").slideDown("fast");
 		//console.log("score: " + score);
 		//console.log("score: " + score + " == targetScore: " + targetScore);
-		$("#score").slideUp("fast");
 		gameTally = gameTally + score; // add current game score to session score
 		$("#sessionScore").html("session: " + gameTally);
 		message = "You won!<br/>To play again, click on one of these buttons<br/>";
@@ -228,13 +244,12 @@ function checkGameStatus(gameStatus) {
 		id2DArray = [];
 		class2DArray = [];
 		data2DArray = [];
-		$("#field").fadeIn("slow");
+		$("#field").slideDown("slow");
 		//console.log("sliding up #inGameMenu");
 		$("#inGameMenu").slideUp("fast");
 		//console.log("sliding down #start");
 		$("#start").slideDown("fast");
 		generateIcons(iconNum,targetScore,fieldSize); // generate icons
-		
 	} else if (gameStatus == "reset") {
 		console.log("gameStatus: " + gameStatus);
 		iconNum = 0;
@@ -258,9 +273,10 @@ function checkGameStatus(gameStatus) {
 		//console.log("id2DArray: " + id2DArray);
 		//console.log("class2DArray: " + class2DArray);
 		//console.log("data2DArray: " + data2DArray);
-		//console.log("fadingout #field");
-		//$("#field").fadeOut("slow").delay(1000).html("");
-		$("#field").fadeIn("slow");
+		//console.log("fading out #field");
+		//$("#field").fadeIn("slow").html("");
+		$("#field").slideDown("slow").html("");
+		//$("#field").slideUp("slow").delay(1000).html("");
 		//console.log("sliding up #inGameMenu");
 		$("#inGameMenu").slideUp("fast");
 		$("#score").slideUp("fast");
@@ -269,7 +285,7 @@ function checkGameStatus(gameStatus) {
 		$("#message").text("Game Reset");
 		generateIcons(iconNum,targetScore,fieldSize); // generate icons
 	}
-	//console.log("gameStatus: " + gameStatus);
+	console.log("gameStatus: " + gameStatus);
 }
 
 function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
@@ -347,8 +363,10 @@ function generateIcons(iconNum,targetScore,fieldSize,gameStatus) {
 function displayFieldButtons() { // Display game field button options
 	//console.log("sliding down #start");
 	$("#start").slideDown("fast"); // display buttons to select field size
+	//$("#start").fadeIn("fast"); // display buttons to select field size
 	//console.log("sliding up #question");
 	$("#question").slideUp("fast"); // hide question element for selecting reset or continue
+	//$("#question").fadeOut("fast"); // hide question element for selecting reset or continue
 	//gameStatus = "reset";
 	$("#gameScore").html("score: " + score);
 	$("#sessionScore").html("session: " + gameTally);
@@ -382,28 +400,6 @@ function redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray) {
 	message += "<div class='col-md-2'></div></div>"; // right side and end of row
 	message += "</div>"; // end of center
 	$("#field").html(message);
-
-/*
-	switch(fieldSize) { // based on fieldSize, insert a padding value on each .gameCell element to properly space each cell apart
-		case "2":
-			$(".gameCell").css("padding","2px 11px");
-			break;
-		case "3":
-			$(".gameCell").css("padding","2px 12px");
-			break;
-		case "4":
-			$(".gameCell").css("padding","2px 16px");
-			break;
-		case "5":
-			$(".gameCell").css("padding","2px 22px");
-			break;
-		case "6":
-			$(".gameCell").css("padding","2px 18px");
-			break;
-		default:
-			$(".gameCell").css("padding","2px 22px"); // not a very good spacing but it's a fallback value
-	}
-	*/
 }
 
 function convertArray(array1d,array2d,fieldSize) {
