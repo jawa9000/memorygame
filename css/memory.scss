@@ -41,7 +41,7 @@
     background: $background;
     margin: 0 auto;
     width: 100%;
-    @include borderRadius;
+    @include borderRadius(0, 0, 15px, 15px);
 }
 .table { /* change Bootstrap's default background color */
   background: none !important;
@@ -83,6 +83,7 @@
     width: 82px;
     cursor: pointer;
     background: $primiaryColor;
+    margin: 0 auto;
     
     &:hover {
       background: $secondarColor;
@@ -90,6 +91,14 @@
 }
 #inGameMenu, #gameField, #question {
 	display: none;
+}
+
+#score {
+	text-align: center;
+}
+
+.translateMinusY {
+	transform: translateY(-1px);
 }
 
 .container {
@@ -109,12 +118,18 @@ div[id^='button'], #menuReset, #menuContinue {
     	@extend %colorCursor;
   }
 }
+
+#start {
+	background: #8abcf7;
+	border-radius: 0 0 10px 10px;
+}
+
 /* bootstrap button override */
 .btn-toolbar {
 	padding: 0 0 15px;
 }
 .btn-group-lg > .btn {
-	font-size: 48px;
+	font-size: 2.5em;
 	@include borderRadius(15px,15px,15px,15px);
 }
 .btn-default {
@@ -132,6 +147,11 @@ div[id^='button'], #menuReset, #menuContinue {
 .gameRow .col-md-2 {
 	padding-left: 20px;
 	padding-right: 20px;
+}
+
+/* custom.css override */
+body {
+	margin-top: 0;
 }
 
 /* unclickable icon shouldn't have a cursor */
