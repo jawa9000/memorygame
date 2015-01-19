@@ -21,59 +21,75 @@
 		<script src="js/bootstrap.js"></script>
 	</head>
 	<body>
+		<!-- get rid of my custom navigation bar and the js that goes along with it.
 		<nav id="navigation" class="navbar navbar-inverse navbar-fixed-top" role="navigation"></nav>
 		<script defer="defer" src="js/navigation.js"></script>
+		-->
+		
+		<!-- ** redo the entire layout of this page so things actually center or align as they should ** -->
 		<div class="container">
-			<div id="start" class="table">
-				<div class="row">
-					<div id="message" class="cell"></div>
-				</div>
-				<div class="row">
-					<div class="table">
-						<div class="row buttonRow">
-							<div class="col-md-1"></div>
-							<div class="col-md-2" id="button2x2" buttonData="2">2x2</div>
-							<div class="col-md-2" id="button3x3" buttonData="3">3x3</div>
-							<div class="col-md-2" id="button4x4" buttonData="4">4x4</div>
-							<div class="col-md-2" id="button5x5" buttonData="5">5x5</div>
-							<div class="col-md-2" id="button6x6" buttonData="6">6x6</div>
-							<div class="col-md-1"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="table">
+			<div id="start">
 				<div class="row">
 					<div class="col-md-2"></div>
-					<div class="col-md-2">
-						<div id="inGameMenu">Menu</div>
+					<div class="col-md-8">
+						<div id="message"></div>
 					</div>
-					<div class="col-md-6">
-						<div id="question">
-							<div id="questionContainer">
-								<p>reset game or continue?</p>
-								<div class="table">
-									<div class="row buttonRow">
-										<div class="col-md-4"></div>
-										<div class="col-md-2" id="menuReset" menuData="reset">Reset</div>
-										<div class="col-md-2" id="menuContinue" menuData="continue">Continue</div>
-										<div class="col-md-4"></div>
+					<div class="col-md-2"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<div class="btn-toolbar btn-group-lg center-block" role="toolbar" aria-label="fieldSize">
+							<button id="button2x2" buttonData="2" type="button" class="btn btn-default">2x2</button>
+							<button id="button3x3" buttonData="3" type="button" class="btn btn-default">3x3</button>
+							<button id="button4x4" buttonData="4" type="button" class="btn btn-default">4x4</button>
+							<button id="button5x5" buttonData="5" type="button" class="btn btn-default">5x5</button>
+							<button id="button6x6" buttonData="6" type="button" class="btn btn-default">6x6</button>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-4">
+					<div id="inGameMenu">Menu</div>
+				</div>
+				<div class="col-md-4">
+					<div id="score">
+						<div id="gameScore"></div>
+						<div id="sessionScore"></div>
+					</div>
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+			<div class="row translateMinusY">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+					<div id="question">
+						<div id="questionContainer">
+							<p>Reset game or continue with current game?</p>
+							<div class="table">
+								<div class="row buttonRow">
+									<div class="btn-toolbar btn-group-lg" role="toolbar" aria-label="fieldSize">
+										<button id="menuReset" menuData="reset" type="button" class="btn btn-default">Reset</button>
+										<button id="menuContinue" menuData="continue" type="button" class="btn btn-default">Continue</button>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-2"></div>
 				</div>
+				<div class="col-md-2"></div>
 			</div>
-			<div id="score"></div>
+			<!-- finish cleaning up the display alignments -->
 			<div id="gameField" class="table">
 				<div class="row">
-					<div class="col-md-1"></div>
-					<div class="col-md-10">
-						<div id="field"></div>
-					</div>
-					<div class="col-md-1"></div>
+					<!--<div class="col-md-1"></div>-->
+					<!--<div class="col-md-10">-->
+						<div id="field" class="center-block"></div>
+					<!--</div>-->
+					<!--<div class="col-md-1"></div>-->
 				</div>
 			</div>		
 		</div>
