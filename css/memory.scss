@@ -107,10 +107,11 @@
 
 // general button setup
 div[id^='button'], #menuReset, #menuContinue {
-	font-size: 3em;
+	font-size: 1.5em;
 	text-align: center;
 	cursor: pointer;
-	@include padMargin(5px,5px);
+	margin: 0;
+	padding: 0 15px 0 15px;
 	@include borderRadius(15px,15px,15px,15px);
 	background: $primiaryColor;
   
@@ -162,6 +163,16 @@ body {
   	&:hover {
     	color: $starEmptyColor;
   	}
+}
+
+/* footer tweak to keep it at the bottom of the page instead of 'bouncing' */
+footer {
+   position: fixed;
+   left: 0;
+   right: 0;
+   bottom: 10px;
+   height: 40px;
+   
 }
 
 /* clicked animation */

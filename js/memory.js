@@ -8,7 +8,6 @@ var iconTiles = []; // array to hold a list of icons to be display on the game f
 var icons = ["asterisk","cloud","music","heart","star","user","home","file","lock","headphones","volume-up","book","camera","picture","tint","play","arrow-right","fire","eye-open","thumbs-up","globe","phone","floppy-disk","tower","tree-deciduous"]; // all possible icons
 var iconNum = 0; // number of icons to generate
 var fieldSize = 0; // size of game field
-var fields = ["2x2","3x3","4x4","5x5","6x6"]; // game field sizes
 var message = ""; // variable to hold game status message(s)
 var count = 0; // generic number to iterate through icon array when drawing the board
 var clicks = 0; // count the number of times the user clicks
@@ -22,12 +21,15 @@ var gameStatus;
 // button listener
 $("button[id^='button']").click(function() {	
 	fieldSize = $(this).attr("buttonData");
-	if (fieldSize == "2" || fieldSize == "3" || fieldSize == "4" || fieldSize == "5" || fieldSize == "6") { // start game
+	//if (fieldSize == "2" || fieldSize == "3" || fieldSize == "4" || fieldSize == "5" || fieldSize == "6") { // start game
+	//if (fieldSize == "2" || fieldSize == "3" || fieldSize == "4" || fieldSize == "6" || fieldSize == "8") { // start game
+	if (fieldSize == "2" || fieldSize == "3" || fieldSize == "4" || fieldSize == "6") { // start game
 		gameStatus = "active";
 		// get button data and set up dimensions of game
 		iconNum = (fieldSize * fieldSize) / 2; // value for number of icons to create
 		targetScore = Math.floor(fieldSize * fieldSize); // if score == targetScore, the current game has been won
-		if (fieldSize == 3 || fieldSize == 5) {
+		//if (fieldSize == 3 || fieldSize == 5) {
+		if (fieldSize == 3) {
 			targetScore--;
 		}
 		generateIcons(iconNum,targetScore,fieldSize); // generate icons
@@ -84,10 +86,11 @@ $(document).on("click",".gameCell",function() {
 			if (fieldSize == 2) { // col-md-6
 				tempClassInsert += " col-md-6 ";
 			} else if (fieldSize == 3) { //col-md-4
-				tempClassInsert += " col-md-4 ";
+				tempClassInsert += " col-md-3 ";
 			} else if (fieldSize == 4) { //col-md-3
 				tempClassInsert += " col-md-3 ";
-			} else if (fieldSize == 5 || fieldSize == 6) { //col-md-2
+			//} else if (fieldSize == 5 || fieldSize == 6) { //col-md-2
+			} else if (fieldSize == 6) { //col-md-2
 				tempClassInsert = " col-md-2 ";
 			}
 			class2DArray[first][second] = "gameCell center-block glyphicon " + tempClassInsert + " glyphicon-" + data2DArray[first][second]; // replace class array data with data2DArray value and update col-md class	
@@ -250,26 +253,39 @@ function displayFieldButtons() { // Display game field button options
 }
 
 function redrawGameField(fieldSize,id2DArray,class2DArray,data2DArray) {
-	var message = "<div class='gameRow'>";
-	message += "<div class='col-md-2'></div>"; // left side
-	message += "<div class='col-md-8'>"; // start of center
+	var message = "<div class='row'>";
+	if (fieldSize == 2) {
+		message += "<div class='col-md-5'></div>"; // left column (empty)
+		message += "<div class='col-md-2'>"; // center column
+	} else if (fieldSize == 3 || fieldSize == 4) {
+		message += "<div class='col-md-4'></div>"; // left column (empty)
+		message += "<div class='col-md-4'>"; // center column
+	//} else if (fieldSize == 5) { //  not exactly centered. :(
+	//	message += "<div class='col-md-4'></div>"; // left column (empty)
+	//	message += "<div class='col-md-5'>"; // center column
+	} else if (fieldSize == 6) {
+		message += "<div class='col-md-3'></div>"; // left column (empty)
+		message += "<div class='col-md-6'>"; // center column
+	}
 	for (var i = 0; i < fieldSize; i++) {
-	message += "<div class='gameRow'>";
-		if (fieldSize == 5) {
-			message += "<div class='col-md-1'></div>";
-		}
+		message += "<div class='row'>";
 		for (var j = 0; j < fieldSize; j++) {
 			message += "<div id='" + id2DArray[i][j] + "' class='" + class2DArray[i][j] + "' data='" + data2DArray[i][j] + "'></div>";
 		}
-		if (fieldSize == 5) {
-			message += "<div class='col-md-1'></div>";
-		}
 		message += "</div>";
 	}
+	message += "</div>"; // end of center column
+	if (fieldSize == 2) {
+		message += "<div class='col-md-5'></div>"; // right column (empty)
+	} else if (fieldSize == 3 || fieldSize == 4) {
+		message += "<div class='col-md-4'></div>"; // right column (empty)
+	//} else if (fieldSize == 5) {
+	//	message += "<div class='col-md-3'></div>"; // right column (empty)
+	} else if (fieldSize == 6) {
+		message += "<div class='col-md-3'></div>"; // right column (empty)
+	}
 	message += "</div>";
-	// finish up outer elements
-	message += "<div class='col-md-2'></div></div>"; // right side and end of row
-	message += "</div>"; // end of center
+
 	$("#field").html(message);
 }
 
@@ -292,10 +308,12 @@ function generateField(fieldSize,id2DArray,class2DArray,data2DArray) { // genera
 			if (fieldSize == 2) { // col-md-6
 				class2DArray[i][j] += " col-md-6 ";
 			} else if (fieldSize == 3) { //col-md-4
-				class2DArray[i][j] += " col-md-4 ";
+				//class2DArray[i][j] += " col-md-4 ";
+				class2DArray[i][j] += " col-md-3 ";
 			} else if (fieldSize == 4) { //col-md-3
 				class2DArray[i][j] += " col-md-3 ";
-			} else if (fieldSize == 5 || fieldSize == 6) { //col-md-2
+			//} else if (fieldSize == 5 || fieldSize == 6) { //col-md-2
+			} else if (fieldSize == 6) { //col-md-2
 				class2DArray[i][j] += " col-md-2 ";
 			}
 			if (data2DArray[i][j] == "star-empty") {
