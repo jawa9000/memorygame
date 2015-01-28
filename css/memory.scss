@@ -66,7 +66,8 @@
     background: $background;
     color: #ffffff;
     font-family: FontAwesome;
-    font-size: 1.75em;
+    //font-size: 1.75em;
+    font-size: 1.5em;
 }
 #questionContainer {
 	@include borderRadius(0,0,15px,15px);
@@ -222,6 +223,37 @@ footer {
     	transform: scale(1);
   	}
 }
+
+/* mobile media queries */
+
+/*
+ * 
+    320 px — Mobile portrait
+    480 px — Mobile landscape
+    600 px — Small tablet, phablet portrait
+    768 px — Tablet portrait
+    960 px - phablet landscape
+    1024 px — Tablet landscape/Netbook
+    1280 px & greater — Desktop
+
+ */
+@media screen and (max-device-width: 320px) {
+	.btn-default {
+  		margin: 5px;
+ 	}
+}
+@media screen and (max-device-width: 480px), creen and (max-device-width: 600px) {
+	.btn-default, #menuReset, #menuContinue {
+  		margin: 5px;
+ 	}
+ 	.col-md-4 {
+ 		//margin: 0 auto;
+		display: inline-block;
+ 	}
+}
+
+
+
 
 
 /* experiments */
