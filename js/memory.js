@@ -1,3 +1,5 @@
+// For my son James
+
 var idArray = []; // 1d array of all ids on game field elements
 var dataArray = []; // 1d array of all data values of game field elements
 var classArray = []; // 1d array of all classes of game field elements
